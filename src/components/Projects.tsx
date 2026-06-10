@@ -5,69 +5,55 @@ import { REPOS } from '../data/repos'
 import type { Category } from '../types'
 
 const FILTERS: { value: Category; label: string }[] = [
-  { value: 'all', label: 'All' },
-  { value: 'devtools', label: 'Dev Tools' },
-  { value: 'ai', label: 'AI / ML' },
-  { value: 'qa', label: 'QA & Testing' },
-  { value: 'security', label: 'Security' },
-  { value: 'gaming', label: 'Gaming' },
-  { value: 'devops', label: 'DevOps' },
+  { value: 'all',      label: 'all' },
+  { value: 'devtools', label: 'dev tools' },
+  { value: 'ai',       label: 'ai / ml' },
+  { value: 'qa',       label: 'qa & testing' },
+  { value: 'security', label: 'security' },
+  { value: 'gaming',   label: 'gaming' },
+  { value: 'devops',   label: 'devops' },
 ]
+
+const fade = { hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { duration: .55 } } }
 
 export default function Projects() {
   const [active, setActive] = useState<Category>('all')
-  const ref = useRef(null)
+  const ref    = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-60px' })
 
-  const filtered =
-    active === 'all' ? REPOS : REPOS.filter(r => r.category === active)
+  const filtered = active === 'all' ? REPOS : REPOS.filter(r => r.category === active)
 
   return (
-    <section id="projects" className="py-24 px-4 relative">
-      {/* Faint orb */}
-      <div
-        className="orb w-[600px] h-[600px] bg-violet-600/8 pointer-events-none"
-        style={{ top: '20%', left: '50%', transform: 'translateX(-50%)' }}
-      />
-
+    <section id="projects" className="py-24 px-4 sm:px-8 border-t border-border">
       <div className="max-w-6xl mx-auto" ref={ref}>
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="mb-12 text-center"
-        >
-          <p className="text-primary text-sm font-medium tracking-widest uppercase mb-3">
-            Open Source
-          </p>
-          <h2 className="section-heading">Projects & Solutions</h2>
-          <p className="text-slate-400 max-w-xl mx-auto">
-            Tools, frameworks, and libraries built to solve real engineering problems — all open
-            source on GitHub.
+
+        <motion.div initial="hidden" animate={inView ? 'show' : 'hidden'} variants={fade} className="mb-12">
+          <span className="section-eyebrow">// open source</span>
+          <h2 className="section-title">Projects &amp; Solutions</h2>
+          <p className="section-sub">
+            Tools, frameworks, and libraries built to solve real engineering problems — all open source on GitHub.
           </p>
         </motion.div>
 
         {/* Filter pills */}
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.15 }}
-          className="flex flex-wrap justify-center gap-2 mb-10"
+          initial="hidden" animate={inView ? 'show' : 'hidden'} variants={fade}
+          transition={{ delay: .1 }}
+          className="flex flex-wrap gap-2 mb-8"
         >
           {FILTERS.map(f => (
             <button
               key={f.value}
               onClick={() => setActive(f.value)}
-              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
+              className={`font-mono text-[10px] tracking-[.05em] px-3.5 py-1.5 rounded-sm border transition-all duration-200 ${
                 active === f.value
-                  ? 'bg-primary text-white shadow-lg shadow-primary/20'
-                  : 'border border-white/8 bg-white/4 text-slate-400 hover:text-slate-200 hover:border-white/15'
+                  ? 'bg-primary text-black border-primary font-bold shadow-lg shadow-primary/20'
+                  : 'border-border text-muted hover:text-primary hover:border-primary/30'
               }`}
             >
               {f.label}
               {f.value !== 'all' && (
-                <span className="ml-1.5 text-xs opacity-60">
+                <span className={`ml-1.5 text-[8px] ${active === f.value ? 'opacity-60' : 'opacity-40'}`}>
                   {REPOS.filter(r => r.category === f.value).length}
                 </span>
               )}
@@ -82,8 +68,8 @@ export default function Projects() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+            transition={{ duration: .2 }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"
           >
             {filtered.map((repo, i) => (
               <ProjectCard key={repo.name} repo={repo} index={i} />
@@ -91,20 +77,17 @@ export default function Projects() {
           </motion.div>
         </AnimatePresence>
 
-        {/* CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="mt-12 text-center"
+          initial="hidden" animate={inView ? 'show' : 'hidden'} variants={fade}
+          transition={{ delay: .3 }}
+          className="mt-10 text-center"
         >
           <a
             href="https://github.com/aks-builds?tab=repositories"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-slate-300 transition-colors duration-200 border-b border-slate-700 hover:border-slate-500 pb-0.5"
+            target="_blank" rel="noreferrer"
+            className="font-mono text-[10px] tracking-[.04em] text-muted hover:text-primary border-b border-muted/30 hover:border-primary/40 pb-px transition-all duration-200"
           >
-            View all repositories on GitHub →
+            // view all repositories on GitHub →
           </a>
         </motion.div>
       </div>

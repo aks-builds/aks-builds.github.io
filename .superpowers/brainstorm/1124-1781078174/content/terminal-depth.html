@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Terminal Depth</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#0a0a0a;color:#e2e8f0;font-family:'IBM Plex Sans',sans-serif;padding:32px 20px 60px;}
+.page-label{text-align:center;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#22c55e;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:8px;}
+h1{text-align:center;font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:600;color:#fafafa;margin-bottom:6px;}
+.sub{text-align:center;color:#3f3f46;font-size:12px;margin-bottom:36px;font-family:'IBM Plex Mono',monospace;}
+
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1100px;margin:0 auto;}
+.card{border-radius:10px;overflow:hidden;cursor:pointer;border:2px solid #1c1c1c;transition:all .2s;position:relative;}
+.card:hover{border-color:#22c55e;transform:translateY(-2px);}
+.card.selected{border-color:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,0.12);}
+.card.selected::after{content:'✓';position:absolute;top:8px;right:8px;width:20px;height:20px;background:#22c55e;color:#000;font-size:10px;font-weight:700;border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:10;text-align:center;line-height:20px;}
+
+/* ─── OPTION A: Full Terminal ─── */
+.a-hero{background:#0d0d0d;padding:0;}
+.a-titlebar{background:#1c1c1c;padding:8px 12px;display:flex;align-items:center;gap:6px;border-bottom:1px solid #262626;}
+.a-titlebar span{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#52525b;flex:1;text-align:center;letter-spacing:0.04em;}
+.a-dot{width:9px;height:9px;border-radius:50%;}
+.a-body{padding:16px 14px 14px;}
+.a-line{font-family:'IBM Plex Mono',monospace;font-size:10px;margin-bottom:6px;line-height:1.5;}
+.a-prompt{color:#52525b;}
+.a-cmd{color:#22c55e;}
+.a-out{color:#a3a3a3;padding-left:12px;}
+.a-name{color:#fafafa;font-size:18px;font-weight:600;margin:8px 0 4px;padding-left:12px;}
+.a-role{color:#22c55e;font-size:9px;padding-left:12px;margin-bottom:8px;letter-spacing:0.06em;}
+.a-cursor{display:inline-block;width:7px;height:13px;background:#22c55e;margin-left:2px;vertical-align:middle;animation:blink 1s step-end infinite;}
+
+.a-projects{background:#111;padding:12px 14px;border-top:1px solid #1c1c1c;}
+.a-win-title{font-family:'IBM Plex Mono',monospace;font-size:8px;color:#52525b;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.a-card{background:#0d0d0d;border:1px solid #1c1c1c;border-radius:4px;padding:8px 10px;margin-bottom:6px;}
+.a-card-top{display:flex;justify-content:space-between;margin-bottom:3px;}
+.a-card-name{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#22c55e;font-weight:600;}
+.a-card-lang{font-family:'IBM Plex Mono',monospace;font-size:8px;color:#3f3f46;}
+.a-card-desc{font-family:'IBM Plex Mono',monospace;font-size:8px;color:#525252;line-height:1.4;}
+
+.a-info{background:#0d0d0d;padding:12px 14px;border-top:1px solid #1c1c1c;}
+
+/* ─── OPTION B: Terminal-Inspired ─── */
+.b-hero{background:#0a0a0a;padding:22px 18px 18px;border-bottom:1px solid #161616;position:relative;overflow:hidden;}
+.b-hero::after{content:'';position:absolute;width:200px;height:200px;background:radial-gradient(circle,rgba(34,197,94,0.1) 0%,transparent 70%);bottom:-40px;right:-20px;pointer-events:none;}
+.b-prompt{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#22c55e;margin-bottom:14px;letter-spacing:0.04em;}
+.b-prompt::before{content:'> ';color:#3f3f46;}
+.b-name{font-size:36px;font-weight:700;color:#fafafa;line-height:1;margin-bottom:8px;letter-spacing:-0.02em;font-family:'IBM Plex Mono',monospace;}
+.b-role{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#3f3f46;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:16px;}
+.b-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:16px;}
+.b-tag{font-family:'IBM Plex Mono',monospace;font-size:8px;color:#22c55e;border:1px solid rgba(34,197,94,0.2);border-radius:3px;padding:2px 7px;}
+.b-btns{display:flex;gap:7px;}
+.b-btn-p{padding:6px 12px;background:#22c55e;border-radius:4px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;color:#000;border:none;letter-spacing:0.04em;}
+.b-btn-s{padding:6px 12px;border:1px solid #262626;border-radius:4px;font-family:'IBM Plex Mono',monospace;font-size:9px;color:#52525b;background:transparent;}
+
+.b-projects{background:#0a0a0a;padding:12px 14px;border-top:1px solid #161616;}
+.b-sec-label{font-family:'IBM Plex Mono',monospace;font-size:8px;color:#3f3f46;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;}
+.b-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.b-pcard{background:#111;border:1px solid #1c1c1c;border-radius:6px;padding:8px 9px;}
+.b-pcard-name{font-family:'IBM Plex Mono',monospace;font-size:8px;color:#fafafa;font-weight:600;margin-bottom:3px;}
+.b-pcard-desc{font-size:8px;color:#52525b;line-height:1.4;font-family:'IBM Plex Sans',sans-serif;}
+.b-pcard-lang{font-family:'IBM Plex Mono',monospace;font-size:7px;color:#22c55e;margin-top:4px;}
+
+.b-info{background:#0d0d0d;padding:12px 14px;border-top:1px solid #161616;}
+
+/* ─── OPTION C: Terminal Hero + Clean ─── */
+.c-hero{background:#0a0a0a;padding:0;border-bottom:1px solid #161616;}
+.c-win{background:#161616;border-radius:8px 8px 0 0;overflow:hidden;margin:14px 14px 0;}
+.c-winbar{background:#1c1c1c;padding:7px 10px;display:flex;align-items:center;gap:5px;}
+.c-winbar span{font-family:'IBM Plex Mono',monospace;font-size:8px;color:#3f3f46;flex:1;text-align:center;}
+.c-wdot{width:8px;height:8px;border-radius:50%;}
+.c-winbody{padding:12px 14px 14px;}
+.c-wline{font-family:'IBM Plex Mono',monospace;font-size:9px;margin-bottom:4px;line-height:1.5;}
+.c-wname{color:#fafafa;font-size:16px;font-weight:600;}
+.c-wrole{color:#22c55e;font-size:8px;letter-spacing:0.06em;}
+.c-wcursor{display:inline-block;width:6px;height:11px;background:#22c55e;margin-left:2px;vertical-align:middle;animation:blink 1s step-end infinite;}
+
+.c-below{background:#0a0a0a;padding:14px;}
+.c-sec-head{font-family:'IBM Plex Mono',monospace;font-size:8px;color:#3f3f46;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.c-sec-head::after{content:'';flex:1;height:1px;background:#1c1c1c;}
+.c-pcards{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.c-pcard{background:#111;border:1px solid #1c1c1c;border-radius:8px;padding:9px 10px;}
+.c-pcard-name{font-size:9px;font-weight:600;color:#fafafa;margin-bottom:3px;font-family:'IBM Plex Mono',monospace;}
+.c-pcard-desc{font-size:8px;color:#52525b;line-height:1.4;font-family:'IBM Plex Sans',sans-serif;}
+.c-pcard-tag{font-family:'IBM Plex Mono',monospace;font-size:7px;color:#22c55e;margin-top:4px;}
+
+.c-info{background:#0d0d0d;padding:12px 14px;border-top:1px solid #161616;}
+
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* shared card-info */
+.card-info{padding:12px 14px 14px;background:#0d0d0d;}
+.palette{display:flex;gap:4px;margin-bottom:8px;}
+.sw{width:16px;height:16px;border-radius:3px;}
+.card-label{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:#fafafa;margin-bottom:4px;}
+.card-desc{font-family:'IBM Plex Sans',sans-serif;font-size:10px;color:#52525b;line-height:1.5;}
+.card-note{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#3f3f46;margin-top:6px;}
+
+.note{text-align:center;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#3f3f46;margin-top:24px;letter-spacing:0.04em;}
+</style>
+</head>
+<body>
+
+<div class="page-label">> step 2 of 4</div>
+<h1>How deep does the terminal go?</h1>
+<p class="sub">// Carbon aesthetic — choose the intensity</p>
+
+<div class="cards">
+
+  <!-- A: FULL TERMINAL -->
+  <div class="card" data-choice="full-terminal" onclick="toggleSelect(this)">
+    <div class="a-hero">
+      <div class="a-titlebar">
+        <div class="a-dot" style="background:#ef4444"></div>
+        <div class="a-dot" style="background:#f59e0b"></div>
+        <div class="a-dot" style="background:#22c55e"></div>
+        <span>aks-builds — zsh</span>
+      </div>
+      <div class="a-body">
+        <div class="a-line"><span class="a-prompt">~  </span><span class="a-cmd">whoami</span></div>
+        <div class="a-name">Aditya S.<span class="a-cursor"></span></div>
+        <div class="a-role">CLOUD_NATIVE_QUALITY_ENGINEER</div>
+        <div class="a-line" style="margin-top:6px"><span class="a-prompt">~  </span><span class="a-cmd">ls ./projects</span></div>
+      </div>
+    </div>
+    <div class="a-projects">
+      <div class="a-win-title">drwxr-xr-x  projects/</div>
+      <div class="a-card">
+        <div class="a-card-top">
+          <span class="a-card-name">cliproof</span>
+          <span class="a-card-lang">Python</span>
+        </div>
+        <div class="a-card-desc">Terminal screenshot proof tool for READMEs...</div>
+      </div>
+      <div class="a-card">
+        <div class="a-card-top">
+          <span class="a-card-name">ai-test-failure-analyzer</span>
+          <span class="a-card-lang">Python</span>
+        </div>
+        <div class="a-card-desc">Traces test failures through git & logs...</div>
+      </div>
+    </div>
+    <div class="card-info">
+      <div class="card-label">A — Full Terminal</div>
+      <div class="card-desc">The entire site IS a terminal. macOS window chrome, command prompts, directory listings for projects. Extremely unique.</div>
+      <div class="card-note">Risk: may feel gimmicky after 10s</div>
+    </div>
+  </div>
+
+  <!-- B: TERMINAL-INSPIRED -->
+  <div class="card" data-choice="terminal-inspired" onclick="toggleSelect(this)">
+    <div class="b-hero">
+      <div class="b-prompt">whoami — Cloud Native Quality Engineer</div>
+      <div class="b-name">Aditya S.</div>
+      <div class="b-role">// Cloud Native Quality Engineer</div>
+      <div class="b-tags">
+        <span class="b-tag">AI Tools</span>
+        <span class="b-tag">QA</span>
+        <span class="b-tag">DevTools</span>
+        <span class="b-tag">MCP</span>
+      </div>
+      <div class="b-btns">
+        <button class="b-btn-p">View Projects</button>
+        <button class="b-btn-s">GitHub ↗</button>
+      </div>
+    </div>
+    <div class="b-projects">
+      <div class="b-sec-label">projects</div>
+      <div class="b-grid">
+        <div class="b-pcard">
+          <div class="b-pcard-name">cliproof</div>
+          <div class="b-pcard-desc">Terminal screenshot proof tool</div>
+          <div class="b-pcard-lang">Python · npm</div>
+        </div>
+        <div class="b-pcard">
+          <div class="b-pcard-name">ai-test-analyzer</div>
+          <div class="b-pcard-desc">AI-powered test failure tracer</div>
+          <div class="b-pcard-lang">Python · MCP</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-info">
+      <div class="card-label">B — Terminal-Inspired ✦</div>
+      <div class="card-desc">Terminal DNA everywhere — mono font, green accents, `//` comment labels, tag chips — but laid out as a clean web portfolio. Best balance.</div>
+      <div class="card-note">Recommended: readable + distinctive</div>
+    </div>
+  </div>
+
+  <!-- C: TERMINAL HERO + CLEAN -->
+  <div class="card" data-choice="hero-terminal" onclick="toggleSelect(this)">
+    <div class="c-hero">
+      <div class="c-win">
+        <div class="c-winbar">
+          <div class="c-wdot" style="background:#ef4444"></div>
+          <div class="c-wdot" style="background:#f59e0b"></div>
+          <div class="c-wdot" style="background:#22c55e"></div>
+          <span>aditya@portfolio ~ zsh</span>
+        </div>
+        <div class="c-winbody">
+          <div class="c-wline" style="color:#3f3f46;font-size:8px;">$ whoami</div>
+          <div class="c-wline c-wname">Aditya S.<span class="c-wcursor"></span></div>
+          <div class="c-wline c-wrole">Cloud Native Quality Engineer</div>
+        </div>
+      </div>
+      <div style="height:12px"></div>
+    </div>
+    <div class="c-below">
+      <div class="c-sec-head">projects</div>
+      <div class="c-pcards">
+        <div class="c-pcard">
+          <div class="c-pcard-name">cliproof</div>
+          <div class="c-pcard-desc">Terminal screenshot proof tool for READMEs</div>
+          <div class="c-pcard-tag">Python · npm · docker</div>
+        </div>
+        <div class="c-pcard">
+          <div class="c-pcard-name">ai-test-analyzer</div>
+          <div class="c-pcard-desc">Traces test failures through git & logs</div>
+          <div class="c-pcard-tag">Python · MCP · CLI</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-info">
+      <div class="card-label">C — Terminal Hero + Clean</div>
+      <div class="card-desc">Hero = real macOS terminal window mockup. Below the fold = clean dark cards with subtle mono accents. Strong first impression, easy to read after.</div>
+      <div class="card-note">Dramatic entrance, clean content</div>
+    </div>
+  </div>
+
+</div>
+
+<p class="note">// all three use IBM Plex Mono + acid green — only the intensity changes</p>
+
+</body>
+</html>

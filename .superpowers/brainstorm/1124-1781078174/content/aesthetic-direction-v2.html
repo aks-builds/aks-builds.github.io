@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Aesthetic Direction — Masculine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: #09090b;
+    color: #e2e8f0;
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    padding: 36px 24px 60px;
+  }
+  .page-label {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #6366f1;
+    margin-bottom: 8px;
+  }
+  h1 {
+    text-align: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 24px;
+    font-weight: 800;
+    color: #f8fafc;
+    margin-bottom: 6px;
+  }
+  .sub {
+    text-align: center;
+    color: #52525b;
+    font-size: 13px;
+    margin-bottom: 40px;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .card {
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+    position: relative;
+  }
+  .card:hover { transform: translateY(-3px); }
+  .card.selected {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 4px rgba(99,102,241,0.12);
+  }
+  .card.selected::after {
+    content: '✓';
+    position: absolute;
+    top: 10px; right: 10px;
+    width: 22px; height: 22px;
+    background: #6366f1;
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    text-align: center;
+    line-height: 22px;
+  }
+  .card-info {
+    padding: 14px 16px 16px;
+  }
+  .palette { display: flex; gap: 5px; margin-bottom: 10px; }
+  .sw { width: 18px; height: 18px; border-radius: 4px; }
+  .card-label { font-size: 13px; font-weight: 700; color: #f1f5f9; margin-bottom: 4px; letter-spacing: 0.02em; }
+  .card-desc { font-size: 11px; color: #52525b; line-height: 1.55; }
+  .card-fonts { margin-top: 8px; font-size: 10px; color: #3f3f46; letter-spacing: 0.04em; }
+
+  /* ══════════════════════════════
+     A — OBSIDIAN  (black + amber)
+  ══════════════════════════════ */
+  .card-a { background: #09090b; }
+  .card-a .hero {
+    background: #09090b;
+    padding: 26px 22px 22px;
+    min-height: 230px;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid #18181b;
+  }
+  /* Horizontal scan line glow */
+  .card-a .hero::before {
+    content: '';
+    position: absolute;
+    left: -10%; right: -10%;
+    top: 44%;
+    height: 80px;
+    background: radial-gradient(ellipse 80% 100% at 50% 50%, rgba(245,158,11,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  /* Grid lines */
+  .card-a .grid-lines {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(245,158,11,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,158,11,0.04) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+  }
+  .card-a .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: #f59e0b;
+    border: 1px solid rgba(245,158,11,0.25);
+    border-radius: 3px;
+    padding: 2px 8px;
+    margin-bottom: 18px;
+    position: relative;
+    z-index: 1;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .card-a .badge::before { content:'●'; font-size:7px; }
+  .card-a .name {
+    font-family: 'Syne', sans-serif;
+    font-size: 44px;
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    color: #fafafa;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
+  }
+  .card-a .name span { color: #f59e0b; }
+  .card-a .role {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: #52525b;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+  .card-a .btns { display: flex; gap: 8px; position: relative; z-index: 1; }
+  .card-a .btn-p {
+    padding: 7px 14px;
+    background: #f59e0b;
+    border-radius: 4px;
+    font-family: 'Syne', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    color: #000;
+    border: none;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .card-a .btn-s {
+    padding: 7px 14px;
+    border: 1px solid #27272a;
+    border-radius: 4px;
+    font-size: 10px;
+    color: #71717a;
+    background: transparent;
+  }
+  .card-a .card-info { background: #0c0c0f; border-top: 1px solid #18181b; }
+
+  /* ══════════════════════════════
+     B — VOLTAGE  (dark + electric blue/cyan)
+  ══════════════════════════════ */
+  .card-b { background: #030712; }
+  .card-b .hero {
+    background: linear-gradient(160deg, #030712 0%, #060d1f 100%);
+    padding: 26px 22px 22px;
+    min-height: 230px;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid #0f172a;
+  }
+  .card-b .hero::before {
+    content: '';
+    position: absolute;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(59,130,246,0.2) 0%, transparent 65%);
+    top: -30px; right: -30px;
+    pointer-events: none;
+  }
+  .card-b .hero::after {
+    content: '';
+    position: absolute;
+    width: 150px; height: 150px;
+    background: radial-gradient(circle, rgba(6,182,212,0.12) 0%, transparent 65%);
+    bottom: -20px; left: 10px;
+    pointer-events: none;
+  }
+  .card-b .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: #38bdf8;
+    border: 1px solid rgba(56,189,248,0.2);
+    border-radius: 100px;
+    padding: 2px 10px;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+    letter-spacing: 0.06em;
+  }
+  .card-b .badge::before { content:''; width:5px; height:5px; border-radius:50%; background:#22d3ee; flex-shrink:0; }
+  .card-b .name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 38px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.025em;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(90deg, #f8fafc 40%, #38bdf8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .card-b .role {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: #334155;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    position: relative;
+    z-index: 1;
+  }
+  .card-b .btns { display: flex; gap: 8px; position: relative; z-index: 1; }
+  .card-b .btn-p {
+    padding: 7px 14px;
+    background: linear-gradient(135deg, #3b82f6, #06b6d4);
+    border-radius: 6px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    color: #fff;
+    border: none;
+  }
+  .card-b .btn-s {
+    padding: 7px 14px;
+    border: 1px solid #1e293b;
+    border-radius: 6px;
+    font-size: 10px;
+    color: #475569;
+    background: rgba(255,255,255,0.02);
+  }
+  .card-b .card-info { background: #050b18; border-top: 1px solid #0f172a; }
+
+  /* ══════════════════════════════
+     C — CARBON  (charcoal + acid green)
+  ══════════════════════════════ */
+  .card-c { background: #0a0a0a; }
+  .card-c .hero {
+    background: #0a0a0a;
+    padding: 26px 22px 22px;
+    min-height: 230px;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid #161616;
+  }
+  /* Subtle carbon fiber texture */
+  .card-c .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 2px,
+      rgba(255,255,255,0.012) 2px,
+      rgba(255,255,255,0.012) 4px
+    );
+    pointer-events: none;
+  }
+  /* Acid green glow */
+  .card-c .hero::after {
+    content: '';
+    position: absolute;
+    width: 180px; height: 180px;
+    background: radial-gradient(circle, rgba(34,197,94,0.15) 0%, transparent 70%);
+    bottom: -10px; right: 10px;
+    pointer-events: none;
+  }
+  .card-c .terminal-line {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: #22c55e;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+    letter-spacing: 0.04em;
+  }
+  .card-c .terminal-line::before { content: '> '; opacity: 0.5; }
+  .card-c .name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 34px;
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: #fafafa;
+    margin-bottom: 4px;
+    position: relative;
+    z-index: 1;
+  }
+  .card-c .name .cursor {
+    display: inline-block;
+    width: 3px;
+    height: 1em;
+    background: #22c55e;
+    margin-left: 4px;
+    vertical-align: middle;
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+  .card-c .role {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: #3f3f46;
+    letter-spacing: 0.06em;
+    margin-bottom: 18px;
+    position: relative;
+    z-index: 1;
+  }
+  .card-c .role .highlight { color: #22c55e; }
+  .card-c .btns { display: flex; gap: 8px; position: relative; z-index: 1; }
+  .card-c .btn-p {
+    padding: 7px 14px;
+    background: transparent;
+    border: 1px solid #22c55e;
+    border-radius: 3px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    font-weight: 600;
+    color: #22c55e;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .card-c .btn-s {
+    padding: 7px 14px;
+    border: 1px solid #1c1c1c;
+    border-radius: 3px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: #3f3f46;
+    background: transparent;
+    letter-spacing: 0.06em;
+  }
+  .card-c .card-info { background: #0d0d0d; border-top: 1px solid #161616; }
+
+  .note {
+    text-align: center;
+    font-size: 11px;
+    color: #3f3f46;
+    margin-top: 28px;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-label">Step 1 of 4 — Revised</div>
+<h1>Choose your aesthetic</h1>
+<p class="sub">Three bold, sharp directions. Click to select.</p>
+
+<div class="cards">
+
+  <!-- A: OBSIDIAN -->
+  <div class="card card-a" data-choice="obsidian" onclick="toggleSelect(this)">
+    <div class="hero">
+      <div class="grid-lines"></div>
+      <div class="badge">available for work</div>
+      <div class="name">Aditya <span>S.</span></div>
+      <div class="role">// Cloud Native Quality Engineer</div>
+      <div class="btns">
+        <button class="btn-p">View Projects</button>
+        <button class="btn-s">GitHub ↗</button>
+      </div>
+    </div>
+    <div class="card-info">
+      <div class="palette">
+        <div class="sw" style="background:#09090b;border:1px solid #27272a"></div>
+        <div class="sw" style="background:#f59e0b"></div>
+        <div class="sw" style="background:#ef4444"></div>
+        <div class="sw" style="background:#fafafa"></div>
+        <div class="sw" style="background:#18181b;border:1px solid #27272a"></div>
+      </div>
+      <div class="card-label">A — Obsidian</div>
+      <div class="card-desc">Pure black + amber/fire. Grid-line texture, Syne 800 bold headlines, mono badge labels. Raycast / Linear energy — sharp, confident, no decoration.</div>
+      <div class="card-fonts">Syne · IBM Plex Mono · black/amber</div>
+    </div>
+  </div>
+
+  <!-- B: VOLTAGE -->
+  <div class="card card-b" data-choice="voltage" onclick="toggleSelect(this)">
+    <div class="hero">
+      <div class="badge">available for work</div>
+      <div class="name">Aditya S.</div>
+      <div class="role">// Cloud Native Quality Engineer</div>
+      <div class="btns">
+        <button class="btn-p">View Projects</button>
+        <button class="btn-s">GitHub ↗</button>
+      </div>
+    </div>
+    <div class="card-info">
+      <div class="palette">
+        <div class="sw" style="background:#030712;border:1px solid #0f172a"></div>
+        <div class="sw" style="background:#3b82f6"></div>
+        <div class="sw" style="background:#06b6d4"></div>
+        <div class="sw" style="background:#38bdf8"></div>
+        <div class="sw" style="background:#0f172a"></div>
+      </div>
+      <div class="card-label">B — Voltage</div>
+      <div class="card-desc">Deep navy-black + electric blue→cyan gradient. Space Grotesk headings, IBM Plex Mono accents, radial glows. GitHub dark / Vercel / Next.js — tech-precise and powerful.</div>
+      <div class="card-fonts">Space Grotesk · IBM Plex Mono · navy/blue/cyan</div>
+    </div>
+  </div>
+
+  <!-- C: CARBON -->
+  <div class="card card-c" data-choice="carbon" onclick="toggleSelect(this)">
+    <div class="hero">
+      <div class="terminal-line">whoami</div>
+      <div class="name">Aditya S.<span class="cursor"></span></div>
+      <div class="role">// <span class="highlight">Cloud Native</span> Quality Engineer</div>
+      <div class="btns">
+        <button class="btn-p">./projects</button>
+        <button class="btn-s">github ↗</button>
+      </div>
+    </div>
+    <div class="card-info">
+      <div class="palette">
+        <div class="sw" style="background:#0a0a0a;border:1px solid #1c1c1c"></div>
+        <div class="sw" style="background:#22c55e"></div>
+        <div class="sw" style="background:#4ade80"></div>
+        <div class="sw" style="background:#fafafa"></div>
+        <div class="sw" style="background:#161616;border:1px solid #1c1c1c"></div>
+      </div>
+      <div class="card-label">C — Carbon</div>
+      <div class="card-desc">Charcoal + acid green. Full IBM Plex Mono — headlines AND body. Terminal cursor blink, carbon-fiber texture, CLI-flavored button labels. Raw technical authority.</div>
+      <div class="card-fonts">IBM Plex Mono · IBM Plex Sans · charcoal/acid-green</div>
+    </div>
+  </div>
+
+</div>
+
+<p class="note">All three are dark. The difference is personality: fire (A), precision (B), or terminal power (C).</p>
+
+</body>
+</html>

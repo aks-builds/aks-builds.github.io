@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Aesthetic Direction</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Serif+Display:ital@0;1&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&family=DM+Sans:wght@300;400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #111118;
+    color: #e2e8f0;
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    padding: 40px 24px 60px;
+  }
+  .page-title {
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #6366f1;
+    margin-bottom: 10px;
+  }
+  h1 {
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: #f1f5f9;
+    margin-bottom: 8px;
+  }
+  .subtitle {
+    text-align: center;
+    color: #64748b;
+    font-size: 14px;
+    margin-bottom: 48px;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .card {
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.25s ease;
+    position: relative;
+  }
+  .card:hover { transform: translateY(-4px); }
+  .card.selected { border-color: #6366f1; box-shadow: 0 0 0 4px rgba(99,102,241,0.15); }
+
+  /* ═══ OPTION A: AURORA ═══ */
+  .card-a .mockup-hero {
+    background: #0b0a10;
+    padding: 28px 24px 20px;
+    position: relative;
+    overflow: hidden;
+    min-height: 240px;
+  }
+  .card-a .mockup-hero::before {
+    content: '';
+    position: absolute;
+    width: 220px; height: 220px;
+    background: radial-gradient(circle, rgba(168,85,247,0.35) 0%, transparent 70%);
+    top: -40px; right: -40px;
+    pointer-events: none;
+  }
+  .card-a .mockup-hero::after {
+    content: '';
+    position: absolute;
+    width: 180px; height: 180px;
+    background: radial-gradient(circle, rgba(244,63,94,0.25) 0%, transparent 70%);
+    bottom: -20px; left: -20px;
+    pointer-events: none;
+  }
+  .card-a .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    color: #f9a8d4;
+    border: 1px solid rgba(249,168,212,0.25);
+    border-radius: 100px;
+    padding: 3px 10px;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+  }
+  .card-a .badge::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: #f9a8d4; }
+  .card-a .name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px;
+    font-weight: 300;
+    line-height: 1;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, #fce7f3 0%, #c084fc 45%, #818cf8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+    z-index: 1;
+  }
+  .card-a .role {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #94a3b8;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+  .card-a .btns { display: flex; gap: 8px; position: relative; z-index: 1; }
+  .card-a .btn-primary {
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #f43f5e, #a855f7);
+    border-radius: 8px;
+    font-size: 10px;
+    font-weight: 500;
+    color: white;
+    border: none;
+  }
+  .card-a .btn-secondary {
+    padding: 8px 16px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    font-size: 10px;
+    color: #94a3b8;
+    background: transparent;
+  }
+  .card-a .info {
+    background: #0f0e16;
+    padding: 16px 20px;
+  }
+  .card-a .palette {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .card-a .swatch {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+  }
+  .card-a .label { font-size: 13px; font-weight: 600; color: #f1f5f9; margin-bottom: 4px; }
+  .card-a .desc { font-size: 11px; color: #64748b; line-height: 1.5; }
+  .card-a .fonts {
+    margin-top: 10px;
+    font-size: 10px;
+    color: #475569;
+    letter-spacing: 0.05em;
+  }
+
+  /* ═══ OPTION B: SAGE & CREAM ═══ */
+  .card-b .mockup-hero {
+    background: #0d0c09;
+    padding: 28px 24px 20px;
+    min-height: 240px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card-b .mockup-hero::before {
+    content: '';
+    position: absolute;
+    width: 260px; height: 100px;
+    background: linear-gradient(90deg, transparent, rgba(106,158,122,0.12), transparent);
+    top: 40%; left: -20px; right: -20px;
+    pointer-events: none;
+  }
+  .card-b .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    color: #6a9e7a;
+    border: 1px solid rgba(106,158,122,0.3);
+    border-radius: 4px;
+    padding: 3px 10px;
+    margin-bottom: 16px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .card-b .name {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 8px;
+    color: #e8dcc8;
+  }
+  .card-b .name em {
+    font-style: italic;
+    font-weight: 400;
+    color: #6a9e7a;
+  }
+  .card-b .role {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: #6a7a6e;
+    margin-bottom: 20px;
+    letter-spacing: 0.06em;
+  }
+  .card-b .btns { display: flex; gap: 8px; }
+  .card-b .btn-primary {
+    padding: 8px 16px;
+    background: #6a9e7a;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    color: #0d0c09;
+    border: none;
+    letter-spacing: 0.04em;
+  }
+  .card-b .btn-secondary {
+    padding: 8px 16px;
+    border: 1px solid #6a9e7a;
+    border-radius: 4px;
+    font-size: 10px;
+    color: #6a9e7a;
+    background: transparent;
+  }
+  .card-b .info {
+    background: #0f0e0a;
+    padding: 16px 20px;
+  }
+  .card-b .palette { display: flex; gap: 6px; margin-bottom: 10px; }
+  .card-b .swatch { width: 20px; height: 20px; border-radius: 4px; }
+  .card-b .label { font-size: 13px; font-weight: 600; color: #f1f5f9; margin-bottom: 4px; }
+  .card-b .desc { font-size: 11px; color: #64748b; line-height: 1.5; }
+  .card-b .fonts { margin-top: 10px; font-size: 10px; color: #475569; letter-spacing: 0.05em; }
+
+  /* ═══ OPTION C: BLUSH EDITORIAL ═══ */
+  .card-c .mockup-hero {
+    background: linear-gradient(160deg, #0d0b14 0%, #0f0c18 100%);
+    padding: 28px 24px 20px;
+    min-height: 240px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card-c .mockup-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 50% at 80% 50%, rgba(196,181,253,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .card-c .grain {
+    position: absolute;
+    inset: 0;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .card-c .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    color: #c4b5fd;
+    background: rgba(196,181,253,0.08);
+    border: 1px solid rgba(196,181,253,0.2);
+    border-radius: 100px;
+    padding: 3px 10px;
+    margin-bottom: 14px;
+    position: relative;
+    z-index: 1;
+  }
+  .card-c .badge::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: #f9a8d4; }
+  .card-c .name-wrap {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 4px;
+  }
+  .card-c .name-small {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    color: #94a3b8;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .card-c .name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 38px;
+    font-weight: 400;
+    line-height: 1.1;
+    color: #f8fafc;
+    font-style: italic;
+  }
+  .card-c .name span {
+    font-style: normal;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(249,168,212,0.6);
+  }
+  .card-c .role {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    color: #64748b;
+    margin: 10px 0 18px;
+    position: relative;
+    z-index: 1;
+  }
+  .card-c .btns { display: flex; gap: 8px; position: relative; z-index: 1; }
+  .card-c .btn-primary {
+    padding: 8px 16px;
+    background: transparent;
+    border: 1px solid rgba(249,168,212,0.5);
+    border-radius: 100px;
+    font-size: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    color: #f9a8d4;
+  }
+  .card-c .btn-secondary {
+    padding: 8px 16px;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 100px;
+    font-size: 10px;
+    color: #64748b;
+    background: transparent;
+  }
+  .card-c .info { background: #100e18; padding: 16px 20px; }
+  .card-c .palette { display: flex; gap: 6px; margin-bottom: 10px; }
+  .card-c .swatch { width: 20px; height: 20px; border-radius: 50%; }
+  .card-c .label { font-size: 13px; font-weight: 600; color: #f1f5f9; margin-bottom: 4px; }
+  .card-c .desc { font-size: 11px; color: #64748b; line-height: 1.5; }
+  .card-c .fonts { margin-top: 10px; font-size: 10px; color: #475569; }
+
+  /* Selection overlay */
+  .card.selected::after {
+    content: '✓ Selected';
+    position: absolute;
+    top: 12px; right: 12px;
+    background: #6366f1;
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 100px;
+    letter-spacing: 0.05em;
+  }
+
+  .note {
+    text-align: center;
+    font-size: 12px;
+    color: #475569;
+    margin-top: 32px;
+  }
+</style>
+</head>
+<body>
+<div class="page-title">Step 1 of 4</div>
+<h1>Choose an aesthetic direction</h1>
+<p class="subtitle">Each option reimagines your portfolio with a distinct personality. Click one to select.</p>
+
+<div class="cards">
+
+  <!-- OPTION A -->
+  <div class="card card-a" data-choice="aurora" onclick="toggleSelect(this)">
+    <div class="mockup-hero">
+      <div class="badge">Available for work</div>
+      <div class="name">Aditya S.</div>
+      <div class="role">Cloud Native Quality Engineer</div>
+      <div class="btns">
+        <button class="btn-primary">View Projects</button>
+        <button class="btn-secondary">GitHub</button>
+      </div>
+    </div>
+    <div class="info">
+      <div class="palette">
+        <div class="swatch" style="background:#0b0a10;border:1px solid #333"></div>
+        <div class="swatch" style="background:linear-gradient(135deg,#f43f5e,#a855f7)"></div>
+        <div class="swatch" style="background:#c084fc"></div>
+        <div class="swatch" style="background:#f9a8d4"></div>
+        <div class="swatch" style="background:#818cf8"></div>
+      </div>
+      <div class="label">A — Aurora</div>
+      <div class="desc">Cormorant Garamond serif headline with a rose→violet gradient. Romantic, editorial, high-fashion developer energy. Thin weights, generous spacing.</div>
+      <div class="fonts">Cormorant Garamond · Inter · rose/violet/indigo</div>
+    </div>
+  </div>
+
+  <!-- OPTION B -->
+  <div class="card card-b" data-choice="sage" onclick="toggleSelect(this)">
+    <div class="mockup-hero">
+      <div class="badge">Available for work</div>
+      <div class="name">Aditya <em>S.</em></div>
+      <div class="role">Cloud Native Quality Engineer</div>
+      <div class="btns">
+        <button class="btn-primary">View Projects</button>
+        <button class="btn-secondary">GitHub</button>
+      </div>
+    </div>
+    <div class="info">
+      <div class="palette">
+        <div class="swatch" style="background:#0d0c09;border:1px solid #333"></div>
+        <div class="swatch" style="background:#6a9e7a"></div>
+        <div class="swatch" style="background:#e8dcc8"></div>
+        <div class="swatch" style="background:#4a7a58"></div>
+        <div class="swatch" style="background:#c8b89a"></div>
+      </div>
+      <div class="label">B — Sage & Cream</div>
+      <div class="desc">Libre Baskerville serif, warm dark background, sage green + antique cream palette. Natural, grounded, honest. Strong and quiet at the same time.</div>
+      <div class="fonts">Libre Baskerville · Inter · sage/cream/warm-dark</div>
+    </div>
+  </div>
+
+  <!-- OPTION C -->
+  <div class="card card-c" data-choice="blush" onclick="toggleSelect(this)">
+    <div class="mockup-hero">
+      <div class="grain"></div>
+      <div class="badge">Available for work</div>
+      <div class="name-wrap">
+        <div class="name-small">Hi, I'm</div>
+        <div class="name"><span>Aditya</span> S.</div>
+      </div>
+      <div class="role">Cloud Native Quality Engineer</div>
+      <div class="btns">
+        <button class="btn-primary">View Projects →</button>
+        <button class="btn-secondary">GitHub</button>
+      </div>
+    </div>
+    <div class="info">
+      <div class="palette">
+        <div class="swatch" style="background:#0d0b14;border:1px solid #333"></div>
+        <div class="swatch" style="background:#f9a8d4"></div>
+        <div class="swatch" style="background:#c4b5fd"></div>
+        <div class="swatch" style="background:linear-gradient(135deg,#f9a8d4,#c4b5fd)"></div>
+        <div class="swatch" style="background:#1e1a2e"></div>
+      </div>
+      <div class="label">C — Blush Editorial</div>
+      <div class="desc">DM Serif Display italic headline with outlined text accents. Blush pink + lavender palette, grain texture overlay. Soft yet confident — editorial without being delicate.</div>
+      <div class="fonts">DM Serif Display · DM Sans · blush/lavender</div>
+    </div>
+  </div>
+
+</div>
+
+<p class="note">These are hero-section previews only. All options get the same sections, same content — just a different visual skin.</p>
+
+</body>
+</html>

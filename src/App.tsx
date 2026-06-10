@@ -1,21 +1,25 @@
-import Nav from './components/Nav'
-import Hero from './components/Hero'
-import About from './components/About'
-import Projects from './components/Projects'
-import Contact from './components/Contact'
-import Footer from './components/Footer'
+import Nav          from './components/Nav'
+import Hero         from './components/Hero'
+import About        from './components/About'
+import NpmPackages  from './components/NpmPackages'
+import Projects     from './components/Projects'
+import Talks        from './components/Talks'
+import Contact      from './components/Contact'
+import Footer       from './components/Footer'
 
 export default function App() {
   return (
-    <div className="noise-overlay">
+    <>
       <Nav />
       <main>
         <Hero />
         <About />
+        <NpmPackages />
         <Projects />
+        <Talks />
         <Contact />
       </main>
       <Footer />
-    </div>
+    </>
   )
 }

@@ -1,147 +1,167 @@
+import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowRight, Github, ChevronDown } from 'lucide-react'
 import { useTypewriter } from '../hooks/useTypewriter'
+import { useCountUp } from '../hooks/useCountUp'
 
 const PHRASES = [
   'Building AI developer tools',
   'Engineering test automation',
-  'Crafting open-source solutions',
-  'Designing QA frameworks',
   'Shipping Claude Code skills',
+  'Tracing test failures to root cause',
+  'Crafting open-source solutions',
 ]
 
-const container = {
+const PARTICLES = [
+  { left: '8%',  top: '70%', dur: 6,   del: .2,  dx: 12,  dy: -90 },
+  { left: '18%', top: '60%', dur: 5,   del: 1.1, dx: -8,  dy: -70 },
+  { left: '70%', top: '80%', dur: 7,   del: .5,  dx: 18,  dy: -100 },
+  { left: '82%', top: '50%', dur: 4.5, del: 1.8, dx: -14, dy: -75 },
+  { left: '55%', top: '75%', dur: 6.5, del: .9,  dx: 10,  dy: -85 },
+  { left: '40%', top: '65%', dur: 5.5, del: 2.5, dx: -20, dy: -65 },
+  { left: '92%', top: '60%', dur: 4,   del: .4,  dx: -5,  dy: -95 },
+]
+
+const stagger = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.12, delayChildren: 0.2 } },
+  show:   { transition: { staggerChildren: .1, delayChildren: .2 } },
+}
+const item = {
+  hidden: { opacity: 0, y: 24 },
+  show:   { opacity: 1, y: 0, transition: { duration: .65, ease: [.22,1,.36,1] } },
 }
 
-const item = {
-  hidden: { opacity: 0, y: 28 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } },
+function Particle({ p }: { p: typeof PARTICLES[0] }) {
+  return (
+    <span
+      className="particle"
+      style={{
+        left: p.left, top: p.top,
+        animation: `ptcl-rise ${p.dur}s ease-in-out ${p.del}s infinite`,
+        '--dx': `${p.dx}px`, '--dy': `${p.dy}px`,
+      } as React.CSSProperties}
+    />
+  )
 }
 
 export default function Hero() {
-  const typed = useTypewriter(PHRASES)
+  const typed   = useTypewriter(PHRASES)
+  const repos   = useCountUp(16,  1200)
+  const pkgs    = useCountUp(5,   1000)
+  const skills  = useCountUp(50,  1400)
+  const heroRef = useRef<HTMLElement>(null)
+
+  // inject particle keyframe once
+  useEffect(() => {
+    if (document.getElementById('ptcl-kf')) return
+    const s = document.createElement('style')
+    s.id = 'ptcl-kf'
+    s.textContent = `
+      @keyframes ptcl-rise {
+        0%   { opacity:0; transform:translate(0,0) scale(1) }
+        25%  { opacity:.5 }
+        75%  { opacity:.2 }
+        100% { opacity:0; transform:translate(var(--dx),var(--dy)) scale(.3) }
+      }`
+    document.head.appendChild(s)
+  }, [])
 
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col items-center justify-center px-4 overflow-hidden"
+      ref={heroRef}
+      className="relative min-h-screen flex flex-col justify-center px-4 sm:px-8 overflow-hidden"
     >
-      {/* Dot grid background */}
-      <div className="absolute inset-0 dot-grid-bg opacity-60" />
+      {/* Backgrounds */}
+      <div className="absolute inset-0 hero-grid-bg opacity-100 pointer-events-none" />
+      <div className="orb w-[560px] h-[560px] bg-green-500/[.05] animate-float-a" style={{ top: '-120px', right: '-80px' }} />
+      <div className="orb w-[380px] h-[380px] bg-green-500/[.03] animate-float-b" style={{ bottom: '-60px', left: '60px' }} />
+      <div className="scan-line" style={{ top: 0 }} />
 
-      {/* Gradient background */}
-      <div className="absolute inset-0 bg-gradient-radial from-[#1a0a3e]/30 via-transparent to-transparent" />
-
-      {/* Floating orbs */}
-      <div
-        className="orb w-[500px] h-[500px] bg-indigo-600/20 animate-float-a"
-        style={{ top: '10%', left: '10%' }}
-      />
-      <div
-        className="orb w-[400px] h-[400px] bg-violet-600/15 animate-float-b"
-        style={{ bottom: '15%', right: '8%' }}
-      />
-      <div
-        className="orb w-[300px] h-[300px] bg-cyan-500/10 animate-float-a"
-        style={{ top: '50%', right: '20%', animationDelay: '4s' }}
-      />
+      {/* Particles */}
+      {PARTICLES.map((p, i) => <Particle key={i} p={p} />)}
 
       {/* Content */}
       <motion.div
-        variants={container}
+        variants={stagger}
         initial="hidden"
         animate="show"
-        className="relative z-10 max-w-3xl text-center"
+        className="relative z-10 max-w-4xl mx-auto w-full"
       >
-        {/* Status badge */}
-        <motion.div variants={item} className="flex justify-center mb-8">
-          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-emerald-500/25 bg-emerald-500/8 text-emerald-400 text-xs font-medium">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            Available for new opportunities
+        <motion.div variants={item} className="mb-7">
+          <span className="available-badge">
+            <span className="available-dot" />
+            available for new opportunities
           </span>
         </motion.div>
 
-        {/* Greeting */}
-        <motion.p variants={item} className="text-slate-500 text-lg mb-2 font-sans">
-          Hi, I'm
-        </motion.p>
-
-        {/* Name */}
         <motion.h1
           variants={item}
-          className="font-display text-6xl sm:text-7xl lg:text-8xl font-bold mb-4 leading-none"
+          className="font-mono text-[clamp(52px,8vw,96px)] font-semibold leading-none tracking-tight mb-4 gradient-name"
         >
-          <span className="gradient-text">Aditya S.</span>
+          Aditya S.
         </motion.h1>
 
-        {/* Title */}
         <motion.p
           variants={item}
-          className="font-display text-xl sm:text-2xl text-slate-300 font-medium mb-6"
+          className="font-mono text-sm text-muted tracking-[.06em] mb-4 before:content-['//\00a0']"
         >
           Cloud Native Quality Engineer
         </motion.p>
 
-        {/* Typewriter */}
-        <motion.div variants={item} className="h-8 flex items-center justify-center mb-10">
-          <span className="text-slate-400 text-base sm:text-lg font-sans">
-            {typed}
-            <span className="typewriter-cursor" />
-          </span>
+        <motion.div variants={item} className="h-5 mb-6 font-mono text-sm text-slate-400">
+          {typed}<span className="tw-cursor" />
         </motion.div>
 
-        {/* CTAs */}
-        <motion.div variants={item} className="flex flex-wrap items-center justify-center gap-3 mb-16">
+        <motion.div variants={item} className="flex flex-wrap gap-2 mb-8">
+          {['AI Tools','QA Engineering','Claude Code','MCP','Test Automation','DevSecOps'].map(t => (
+            <span key={t} className="tag-chip">{t}</span>
+          ))}
+        </motion.div>
+
+        <motion.div variants={item} className="flex flex-wrap gap-3 mb-14">
           <a
             href="#projects"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary hover:bg-primary-light text-white font-medium text-sm transition-all duration-200 hover:shadow-lg hover:shadow-primary/25 hover:-translate-y-0.5"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary hover:bg-primary-light text-black font-mono text-[11px] font-bold tracking-[.05em] rounded transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/25"
           >
-            View Projects
-            <ArrowRight size={16} />
+            View Projects <ArrowRight size={13} />
           </a>
           <a
             href="https://github.com/aks-builds"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/8 hover:border-white/20 text-slate-300 hover:text-white font-medium text-sm transition-all duration-200 hover:-translate-y-0.5"
+            target="_blank" rel="noreferrer"
+            className="inline-flex items-center gap-2 px-5 py-2.5 border border-border hover:border-primary/30 text-muted hover:text-primary font-mono text-[11px] tracking-[.05em] rounded transition-all duration-200 hover:-translate-y-0.5"
           >
-            <Github size={16} />
-            GitHub Profile
+            <Github size={13} /> GitHub ↗
           </a>
         </motion.div>
 
         {/* Stats */}
         <motion.div
           variants={item}
-          className="flex items-center justify-center gap-8 text-sm text-slate-500"
+          className="flex flex-wrap gap-10 pt-6 border-t border-border"
         >
-          <div className="flex flex-col items-center">
-            <span className="text-2xl font-display font-bold text-slate-200">16</span>
-            <span>Repositories</span>
-          </div>
-          <div className="w-px h-8 bg-white/8" />
-          <div className="flex flex-col items-center">
-            <span className="text-2xl font-display font-bold text-slate-200">5+</span>
-            <span>npm packages</span>
-          </div>
-          <div className="w-px h-8 bg-white/8" />
-          <div className="flex flex-col items-center">
-            <span className="text-2xl font-display font-bold text-slate-200">50+</span>
-            <span>Agent skills</span>
-          </div>
+          {[
+            { val: repos,  suffix: '',  label: 'repositories' },
+            { val: pkgs,   suffix: '+', label: 'npm packages' },
+            { val: skills, suffix: '+', label: 'agent skills' },
+          ].map(s => (
+            <div key={s.label}>
+              <span className="block font-mono text-3xl font-semibold text-primary animate-glow-pulse">
+                {s.val}{s.suffix}
+              </span>
+              <span className="font-mono text-[10px] tracking-[.05em] text-muted">{s.label}</span>
+            </div>
+          ))}
         </motion.div>
       </motion.div>
 
-      {/* Scroll hint */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.8, duration: 0.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-slate-600"
+        transition={{ delay: 2, duration: .5 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-muted"
       >
-        <ChevronDown size={18} className="animate-bounce" />
+        <ChevronDown size={16} className="animate-bounce" />
       </motion.div>
     </section>
   )

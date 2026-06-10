@@ -2,106 +2,98 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Github, Menu, X } from 'lucide-react'
 
-const links = [
-  { label: 'About', href: '#about' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Contact', href: '#contact' },
+const LINKS = [
+  { label: './about',    href: '#about' },
+  { label: './projects', href: '#projects' },
+  { label: './talks',    href: '#talks' },
+  { label: './contact',  href: '#contact' },
 ]
 
 export default function Nav() {
-  const [scrolled, setScrolled] = useState(false)
-  const [mobileOpen, setMobileOpen] = useState(false)
+  const [stuck, setStuck]       = useState(false)
+  const [open,  setOpen]        = useState(false)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    const fn = () => setStuck(window.scrollY > 50)
+    window.addEventListener('scroll', fn, { passive: true })
+    return () => window.removeEventListener('scroll', fn)
   }, [])
 
   return (
     <motion.header
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease: 'easeOut' }}
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? 'border-b border-white/5 bg-bg/80 backdrop-blur-xl'
-          : 'bg-transparent'
+      transition={{ duration: .5, ease: 'easeOut' }}
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        stuck ? 'border-b border-border bg-bg/90 backdrop-blur-xl' : ''
       }`}
     >
-      <nav className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <nav className="max-w-6xl mx-auto px-4 sm:px-8 h-14 flex items-center justify-between">
         {/* Logo */}
         <a href="#" className="flex items-center gap-2 group">
-          <div className="w-8 h-8 rounded-lg bg-primary/20 border border-primary/30 flex items-center justify-center text-sm font-display font-bold text-primary-light transition-all duration-200 group-hover:bg-primary/30">
-            a.
-          </div>
-          <span className="font-display font-semibold text-slate-200 hidden sm:block">
-            aks-builds
+          <span className="w-2 h-2 rounded-full bg-primary available-dot" />
+          <span className="font-mono text-sm font-semibold text-slate-100">
+            &gt;_ aks-builds
           </span>
         </a>
 
-        {/* Desktop links */}
-        <div className="hidden sm:flex items-center gap-6">
-          {links.map(link => (
+        {/* Desktop */}
+        <div className="hidden sm:flex items-center gap-5">
+          {LINKS.map(l => (
             <a
-              key={link.href}
-              href={link.href}
-              className="text-sm text-slate-400 hover:text-slate-100 transition-colors duration-200 relative group"
+              key={l.href}
+              href={l.href}
+              className="font-mono text-[11px] tracking-[.04em] text-muted hover:text-primary transition-colors duration-200 relative group"
             >
-              {link.label}
-              <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-primary transition-all duration-200 group-hover:w-full" />
+              {l.label}
+              <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-primary transition-all duration-250 group-hover:w-full" />
             </a>
           ))}
           <a
             href="https://github.com/aks-builds"
-            target="_blank"
-            rel="noreferrer"
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/8 bg-white/4 text-sm text-slate-300 hover:text-white hover:border-primary/50 transition-all duration-200"
+            target="_blank" rel="noreferrer"
+            className="flex items-center gap-1.5 font-mono text-[10px] tracking-[.04em] px-3 py-1.5 rounded border border-border text-muted hover:text-primary hover:border-primary/30 transition-all duration-200"
           >
-            <Github size={15} />
-            <span>GitHub</span>
+            <Github size={12} />
+            github
           </a>
         </div>
 
-        {/* Mobile menu button */}
+        {/* Mobile toggle */}
         <button
-          className="sm:hidden p-2 text-slate-400 hover:text-white transition-colors"
-          onClick={() => setMobileOpen(v => !v)}
-          aria-label="Toggle menu"
+          className="sm:hidden p-2 text-muted hover:text-slate-200 transition-colors"
+          onClick={() => setOpen(v => !v)}
         >
-          {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+          {open ? <X size={18} /> : <Menu size={18} />}
         </button>
       </nav>
 
-      {/* Mobile drawer */}
       <AnimatePresence>
-        {mobileOpen && (
+        {open && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="sm:hidden border-t border-white/5 bg-bg/95 backdrop-blur-xl overflow-hidden"
+            transition={{ duration: .2 }}
+            className="sm:hidden border-t border-border bg-bg/95 backdrop-blur-xl overflow-hidden"
           >
-            <div className="flex flex-col px-4 py-4 gap-3">
-              {links.map(link => (
+            <div className="flex flex-col px-4 py-4 gap-1">
+              {LINKS.map(l => (
                 <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="text-sm text-slate-400 hover:text-white py-2 transition-colors"
+                  key={l.href}
+                  href={l.href}
+                  onClick={() => setOpen(false)}
+                  className="font-mono text-[11px] text-muted hover:text-primary py-2.5 transition-colors"
                 >
-                  {link.label}
+                  {l.label}
                 </a>
               ))}
               <a
                 href="https://github.com/aks-builds"
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center gap-2 text-sm text-slate-400 hover:text-white py-2 transition-colors"
+                target="_blank" rel="noreferrer"
+                className="font-mono text-[11px] text-muted hover:text-primary py-2.5 flex items-center gap-2 transition-colors"
               >
-                <Github size={15} />
-                GitHub
+                <Github size={12} /> github ↗
               </a>
             </div>
           </motion.div>

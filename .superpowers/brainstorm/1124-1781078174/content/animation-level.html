@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Animation & Enrichment Level</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#0a0a0a;color:#e2e8f0;font-family:'IBM Plex Sans',sans-serif;padding:32px 20px 60px;}
+.page-label{text-align:center;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#22c55e;letter-spacing:.15em;text-transform:uppercase;margin-bottom:8px;}
+h1{text-align:center;font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:600;color:#fafafa;margin-bottom:6px;}
+.sub{text-align:center;color:#3f3f46;font-size:12px;font-family:'IBM Plex Mono',monospace;margin-bottom:36px;}
+
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1100px;margin:0 auto;}
+.card{border-radius:10px;overflow:hidden;cursor:pointer;border:2px solid #1c1c1c;transition:border-color .2s;position:relative;}
+.card:hover{border-color:#22c55e44;}
+.card.selected{border-color:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,.1);}
+.card.selected::after{content:'✓';position:absolute;top:10px;right:10px;width:20px;height:20px;background:#22c55e;color:#000;font-size:10px;font-weight:700;border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:10;text-align:center;line-height:20px;font-family:'IBM Plex Mono',monospace;}
+.demo-area{background:#0d0d0d;padding:24px 20px;min-height:240px;border-bottom:1px solid #1c1c1c;position:relative;overflow:hidden;}
+.card-info{padding:14px 16px 16px;background:#0d0d0d;}
+.card-label{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:#fafafa;margin-bottom:5px;}
+.card-desc{font-size:11px;color:#52525b;line-height:1.6;}
+.card-note{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#3f3f46;margin-top:6px;}
+
+/* ═══ A — REFINED SUBTLE ═══ */
+.a .demo-area{display:flex;flex-direction:column;gap:12px;justify-content:center;}
+.a-nav-demo{display:flex;gap:12px;padding:8px 12px;background:#111;border-radius:4px;border:1px solid #161616;width:fit-content;}
+.a-nav-link{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#52525b;position:relative;padding-bottom:2px;}
+.a-nav-link::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:#22c55e;transition:width .3s ease;}
+.a-nav-link:hover::after{width:100%;}
+.a-card-demo{background:#111;border:1px solid #161616;border-radius:6px;padding:12px 14px;transition:border-color .25s,transform .25s,box-shadow .25s;}
+.a-card-demo:hover{border-color:#22c55e33;transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3);}
+.a-card-name{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:#fafafa;margin-bottom:4px;}
+.a-card-desc{font-size:10px;color:#52525b;line-height:1.5;}
+.a-btn-demo{
+  font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;
+  padding:7px 16px;background:#22c55e;color:#000;border:none;border-radius:4px;
+  cursor:pointer;transition:background .2s,transform .2s,box-shadow .2s;
+  width:fit-content;letter-spacing:.04em;
+}
+.a-btn-demo:hover{background:#4ade80;transform:translateY(-1px);box-shadow:0 6px 20px rgba(34,197,94,.2);}
+.a-tag{font-family:'IBM Plex Mono',monospace;font-size:8px;color:#22c55e;border:1px solid rgba(34,197,94,.2);border-radius:2px;padding:2px 7px;transition:background .2s,border-color .2s;}
+.a-tag:hover{background:rgba(34,197,94,.07);border-color:rgba(34,197,94,.4);}
+.a-tags{display:flex;gap:6px;flex-wrap:wrap;}
+
+/* ═══ B — EXPRESSIVE ═══ */
+.b .demo-area{position:relative;}
+/* Particle dots */
+.particle{position:absolute;width:2px;height:2px;background:#22c55e;border-radius:50%;opacity:0;animation:float-particle var(--dur,4s) ease-in-out var(--delay,0s) infinite;}
+@keyframes float-particle{0%{opacity:0;transform:translate(0,0)}20%{opacity:.6}80%{opacity:.4}100%{opacity:0;transform:translate(var(--dx,20px),var(--dy,-60px))}}
+/* Typing line in hero */
+.b-hero-demo{padding:16px;position:relative;z-index:1;}
+.b-name-demo{
+  font-family:'IBM Plex Mono',monospace;font-size:28px;font-weight:600;
+  color:#fafafa;line-height:1;margin-bottom:6px;
+  background:linear-gradient(90deg,#fafafa 60%,#22c55e);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.b-cursor{display:inline-block;width:3px;height:24px;background:#22c55e;vertical-align:middle;animation:blink 1s step-end infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.b-role{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#3f3f46;letter-spacing:.08em;margin-bottom:14px;}
+.b-role::before{content:'// ';}
+/* Glow on the stat number */
+.b-stats{display:flex;gap:16px;}
+.b-stat{text-align:center;}
+.b-stat-n{
+  font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:600;
+  color:#22c55e;display:block;
+  text-shadow:0 0 20px rgba(34,197,94,.4);
+  animation:glow-pulse 2.5s ease-in-out infinite;
+}
+@keyframes glow-pulse{0%,100%{text-shadow:0 0 10px rgba(34,197,94,.3)}50%{text-shadow:0 0 25px rgba(34,197,94,.6),0 0 40px rgba(34,197,94,.2)}}
+.b-stat-l{font-family:'IBM Plex Mono',monospace;font-size:8px;color:#3f3f46;letter-spacing:.06em;}
+/* Scan line */
+.scan-line{position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(34,197,94,.3),transparent);top:0;animation:scan 4s linear infinite;}
+@keyframes scan{0%{top:0;opacity:1}100%{top:100%;opacity:0}}
+/* Card with glow hover state (demo static) */
+.b-card-row{position:absolute;bottom:12px;left:12px;right:12px;display:flex;gap:8px;}
+.b-card-demo{flex:1;background:#111;border:1px solid #22c55e22;border-radius:6px;padding:10px 12px;box-shadow:0 0 12px rgba(34,197,94,.06);}
+.b-card-n{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:#fafafa;margin-bottom:3px;}
+.b-card-d{font-size:9px;color:#52525b;line-height:1.4;}
+.b-card-g{font-family:'IBM Plex Mono',monospace;font-size:8px;color:#22c55e;margin-top:5px;}
+
+/* ═══ C — CINEMATIC ═══ */
+.c .demo-area{background:#050505;}
+/* Matrix rain (simple) */
+.matrix-col{
+  position:absolute;top:-100%;
+  font-family:'IBM Plex Mono',monospace;font-size:9px;
+  color:#22c55e;
+  writing-mode:vertical-rl;letter-spacing:.2em;
+  animation:matrix-fall var(--spd,3s) linear var(--delay,0s) infinite;
+  opacity:.12;pointer-events:none;
+  white-space:nowrap;
+}
+@keyframes matrix-fall{0%{top:-100%}100%{top:110%}}
+/* Hero text reveal */
+.c-hero-demo{position:relative;z-index:2;padding:20px;text-align:center;}
+.c-name{
+  font-family:'IBM Plex Mono',monospace;font-size:36px;font-weight:600;
+  color:#fafafa;letter-spacing:-.01em;line-height:1;
+  animation:char-reveal .8s ease both;
+}
+@keyframes char-reveal{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0% 0 0)}}
+.c-accent{color:#22c55e;}
+.c-under{
+  display:block;width:40px;height:2px;
+  background:linear-gradient(90deg,#22c55e,transparent);
+  margin:8px auto 12px;
+  animation:expand-line .8s .4s ease both;
+}
+@keyframes expand-line{from{width:0}to{width:80px}}
+.c-role{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#3f3f46;letter-spacing:.1em;margin-bottom:20px;}
+/* Hexagonal nodes floating */
+.hex-grid{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;}
+.hex{
+  width:44px;height:44px;background:#111;border:1px solid #1c1c1c;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'IBM Plex Mono',monospace;font-size:7px;color:#52525b;
+  border-radius:4px;
+  animation:hex-float var(--d,3s) ease-in-out var(--del,0s) infinite;
+}
+.hex:hover{border-color:#22c55e44;color:#22c55e;}
+@keyframes hex-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+/* Cursor trail hint */
+.cursor-trail-hint{
+  position:absolute;bottom:10px;right:12px;
+  font-family:'IBM Plex Mono',monospace;font-size:8px;color:#22c55e22;
+  letter-spacing:.06em;
+}
+/* Morphing background gradient */
+.c .demo-area::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at var(--x,50%) var(--y,50%), rgba(34,197,94,.08) 0%,transparent 60%);
+  animation:move-grad 5s ease-in-out infinite;
+}
+@keyframes move-grad{0%{--x:20%;--y:20%}33%{--x:80%;--y:30%}66%{--x:40%;--y:80%}100%{--x:20%;--y:20%}}
+
+.note{text-align:center;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#3f3f46;margin-top:24px;letter-spacing:.04em;}
+</style>
+</head>
+<body>
+
+<div class="page-label">> step 3 of 4</div>
+<h1>Animation & enrichment level</h1>
+<p class="sub">// All use IBM Plex Mono + Carbon — only motion intensity differs</p>
+
+<div class="cards">
+
+  <!-- A: REFINED SUBTLE -->
+  <div class="card a" data-choice="refined" onclick="toggleSelect(this)">
+    <div class="demo-area">
+      <div class="a-nav-demo">
+        <span class="a-nav-link">./projects</span>
+        <span class="a-nav-link">./contact</span>
+        <span class="a-nav-link">github↗</span>
+      </div>
+      <div class="a-card-demo">
+        <div class="a-card-name">cliproof</div>
+        <div class="a-card-desc">Terminal screenshot proof tool — hover me</div>
+      </div>
+      <button class="a-btn-demo">View Projects →</button>
+      <div class="a-tags">
+        <span class="a-tag">ai</span><span class="a-tag">mcp</span><span class="a-tag">docker</span>
+      </div>
+    </div>
+    <div class="card-info">
+      <div class="card-label">A — Refined & Subtle</div>
+      <div class="card-desc">Hover lifts, underline slides, button glow, staggered fade-ups on scroll. Fast, smooth, never distracting. Every interaction feels intentional but quiet.</div>
+      <div class="card-note">Hover the elements above ↑</div>
+    </div>
+  </div>
+
+  <!-- B: EXPRESSIVE -->
+  <div class="card b" data-choice="expressive" onclick="toggleSelect(this)">
+    <div class="demo-area">
+      <div class="scan-line"></div>
+      <!-- Particles -->
+      <div class="particle" style="left:15%;--dur:5s;--delay:.3s;--dx:10px;--dy:-70px"></div>
+      <div class="particle" style="left:30%;--dur:4s;--delay:1s;--dx:-15px;--dy:-50px"></div>
+      <div class="particle" style="left:60%;--dur:6s;--delay:.5s;--dx:20px;--dy:-60px"></div>
+      <div class="particle" style="left:75%;--dur:4.5s;--delay:1.8s;--dx:-8px;--dy:-80px"></div>
+      <div class="particle" style="left:45%;--dur:5.5s;--delay:2.2s;--dx:12px;--dy:-55px"></div>
+      <div class="particle" style="left:85%;--dur:3.5s;--delay:.8s;--dx:-18px;--dy:-65px"></div>
+      <div class="b-hero-demo">
+        <div class="b-name-demo">Aditya S.<span class="b-cursor"></span></div>
+        <div class="b-role">Cloud Native Quality Engineer</div>
+        <div class="b-stats">
+          <div class="b-stat"><span class="b-stat-n">16</span><span class="b-stat-l">repos</span></div>
+          <div class="b-stat"><span class="b-stat-n">5+</span><span class="b-stat-l">npm</span></div>
+          <div class="b-stat"><span class="b-stat-n">50+</span><span class="b-stat-l">skills</span></div>
+        </div>
+      </div>
+      <div class="b-card-row">
+        <div class="b-card-demo">
+          <div class="b-card-n">cliproof</div>
+          <div class="b-card-d">Terminal proof tool</div>
+          <div class="b-card-g">Python · npm</div>
+        </div>
+        <div class="b-card-demo">
+          <div class="b-card-n">openspecpm</div>
+          <div class="b-card-d">BDD project manager</div>
+          <div class="b-card-g">JS · npm</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-info">
+      <div class="card-label">B — Expressive ✦</div>
+      <div class="card-desc">Floating particles, scan line, glowing stat numbers, gradient text, section reveal animations. Rich but purposeful — each effect reinforces the terminal identity.</div>
+      <div class="card-note">Recommended · best quality-to-distraction ratio</div>
+    </div>
+  </div>
+
+  <!-- C: CINEMATIC -->
+  <div class="card c" data-choice="cinematic" onclick="toggleSelect(this)">
+    <div class="demo-area">
+      <!-- Matrix rain -->
+      <div class="matrix-col" style="left:5%;--spd:4s;--delay:0s">1010101</div>
+      <div class="matrix-col" style="left:15%;--spd:3s;--delay:.5s">AKS001</div>
+      <div class="matrix-col" style="left:25%;--spd:5s;--delay:1s">0110110</div>
+      <div class="matrix-col" style="left:40%;--spd:3.5s;--delay:.2s">1001011</div>
+      <div class="matrix-col" style="left:55%;--spd:4.5s;--delay:.8s">CLIPROF</div>
+      <div class="matrix-col" style="left:70%;--spd:3s;--delay:1.5s">0101010</div>
+      <div class="matrix-col" style="left:82%;--spd:4s;--delay:.3s">NODEJS1</div>
+      <div class="matrix-col" style="left:92%;--spd:5.5s;--delay:1s">0011001</div>
+      <div class="c-hero-demo">
+        <div class="c-name">Aditya<span class="c-accent">.</span></div>
+        <span class="c-under"></span>
+        <div class="c-role">CLOUD NATIVE QUALITY ENGINEER</div>
+        <div class="hex-grid">
+          <div class="hex" style="--d:3s;--del:0s">Py</div>
+          <div class="hex" style="--d:4s;--del:.2s">TS</div>
+          <div class="hex" style="--d:3.5s;--del:.4s">C#</div>
+          <div class="hex" style="--d:4.5s;--del:.1s">MCP</div>
+          <div class="hex" style="--d:3s;--del:.6s">AI</div>
+          <div class="hex" style="--d:4s;--del:.3s">QA</div>
+        </div>
+      </div>
+      <div class="cursor-trail-hint">✦ cursor trail enabled</div>
+    </div>
+    <div class="card-info">
+      <div class="card-label">C — Cinematic</div>
+      <div class="card-desc">Matrix rain background, morphing gradient, cursor particle trail, clip-path text reveals, floating skill hexagons, parallax scrolling. Maximalist impact.</div>
+      <div class="card-note">High wow factor · may overshadow content</div>
+    </div>
+  </div>
+
+</div>
+
+<p class="note">// All options share the same B (Terminal-Inspired) layout — only animation intensity changes</p>
+
+</body>
+</html>

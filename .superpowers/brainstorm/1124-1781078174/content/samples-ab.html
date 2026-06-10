@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Portfolio Samples — A vs B</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════════════════════════════
+   GLOBAL
+═══════════════════════════════ */
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:#0a0a0a;}
+::-webkit-scrollbar-thumb{background:#22c55e44;border-radius:2px;}
+
+/* ═══════════════════════════════
+   TAB SWITCHER
+═══════════════════════════════ */
+.switcher{
+  position:fixed;top:0;left:0;right:0;z-index:9999;
+  background:#0a0a0a;
+  border-bottom:1px solid #1c1c1c;
+  display:flex;align-items:center;
+  padding:0 20px;
+  height:44px;
+  gap:4px;
+  font-family:'IBM Plex Mono',monospace;
+}
+.switcher-label{font-size:10px;color:#3f3f46;letter-spacing:0.08em;margin-right:12px;flex-shrink:0;}
+.tab-btn{
+  padding:5px 16px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  font-weight:500;
+  border-radius:4px;
+  border:1px solid #1c1c1c;
+  background:transparent;
+  color:#52525b;
+  cursor:pointer;
+  transition:all .15s;
+  letter-spacing:0.04em;
+}
+.tab-btn.active{background:#22c55e;color:#000;border-color:#22c55e;font-weight:600;}
+.tab-btn:not(.active):hover{border-color:#22c55e33;color:#22c55e;}
+
+.sample{display:none;padding-top:44px;}
+.sample.active{display:block;}
+
+
+/* ══════════════════════════════════════════
+   SAMPLE A — FULL TERMINAL
+══════════════════════════════════════════ */
+#sample-a{
+  background:#0a0a0a;
+  color:#d4d4d4;
+  font-family:'IBM Plex Mono',monospace;
+  min-height:100vh;
+}
+
+/* Persistent terminal chrome */
+.a-nav{
+  position:sticky;top:44px;z-index:100;
+  background:#111;
+  border-bottom:1px solid #1c1c1c;
+  padding:0 20px;
+  height:40px;
+  display:flex;align-items:center;gap:0;
+  overflow-x:auto;
+}
+.a-nav-path{
+  font-size:10px;color:#52525b;
+  white-space:nowrap;
+  padding-right:12px;
+  border-right:1px solid #1c1c1c;
+  margin-right:0;
+}
+.a-nav-path span{color:#22c55e;}
+.a-nav-links{display:flex;margin-left:0;}
+.a-nav-link{
+  font-size:10px;color:#52525b;
+  padding:0 14px;height:40px;
+  display:flex;align-items:center;
+  cursor:pointer;
+  border-right:1px solid #1c1c1c;
+  transition:color .15s;
+  white-space:nowrap;
+}
+.a-nav-link:hover{color:#22c55e;}
+.a-nav-link::before{content:'cd ';color:#3f3f46;}
+
+/* Terminal window component */
+.term-win{
+  border:1px solid #1c1c1c;
+  border-radius:8px;
+  overflow:hidden;
+  background:#0d0d0d;
+}
+.term-titlebar{
+  background:#1c1c1c;
+  padding:8px 12px;
+  display:flex;align-items:center;gap:6px;
+}
+.term-titlebar .title{
+  font-size:10px;color:#52525b;
+  flex:1;text-align:center;
+  letter-spacing:0.04em;
+}
+.dot{width:10px;height:10px;border-radius:50%;}
+.term-body{padding:16px 18px;}
+
+/* Hero section */
+.a-hero{padding:32px 24px;}
+.a-hero .term-body{min-height:280px;}
+.a-line{font-size:12px;margin-bottom:6px;line-height:1.6;}
+.a-prompt{color:#52525b;}
+.a-cmd{color:#22c55e;}
+.a-output{color:#a3a3a3;padding-left:2px;display:block;}
+.a-output.name-line{
+  color:#fafafa;font-size:28px;font-weight:600;
+  letter-spacing:-0.01em;line-height:1.2;
+  margin:10px 0 4px;
+}
+.a-output.role-line{color:#22c55e;font-size:11px;letter-spacing:0.08em;margin-bottom:16px;}
+.a-output.bio-line{font-size:11px;color:#737373;max-width:480px;line-height:1.7;margin-bottom:12px;}
+.blink-cursor{
+  display:inline-block;width:8px;height:16px;
+  background:#22c55e;vertical-align:middle;margin-left:2px;
+  animation:blink 1s step-end infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.a-output.stats{color:#52525b;font-size:10px;letter-spacing:0.04em;margin-top:8px;}
+.a-output.stats span{color:#22c55e;}
+.a-actions{margin-top:16px;display:flex;gap:10px;}
+.a-btn{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;font-weight:600;
+  letter-spacing:0.06em;text-transform:uppercase;
+  padding:8px 16px;border-radius:3px;cursor:pointer;
+  transition:all .15s;
+}
+.a-btn-p{background:#22c55e;color:#000;border:1px solid #22c55e;}
+.a-btn-p:hover{background:#4ade80;border-color:#4ade80;}
+.a-btn-s{background:transparent;color:#52525b;border:1px solid #262626;}
+.a-btn-s:hover{border-color:#22c55e44;color:#22c55e;}
+
+/* Projects section */
+.a-projects{padding:0 24px 40px;}
+.a-sec-header{
+  font-size:10px;color:#52525b;
+  margin-bottom:16px;display:block;
+}
+.a-filter-line{
+  display:flex;align-items:center;gap:8px;
+  margin-bottom:20px;
+  flex-wrap:wrap;
+}
+.a-filter-label{font-size:10px;color:#52525b;}
+.a-filter-label span{color:#22c55e;}
+.a-filter-btn{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:9px;color:#52525b;
+  border:1px solid #1c1c1c;
+  border-radius:2px;
+  padding:3px 10px;cursor:pointer;
+  background:transparent;
+  transition:all .15s;
+  letter-spacing:0.06em;
+}
+.a-filter-btn:hover,.a-filter-btn.active{
+  color:#22c55e;border-color:#22c55e44;
+  background:rgba(34,197,94,0.04);
+}
+.a-project-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:10px;
+}
+.a-project-card{
+  border:1px solid #1c1c1c;border-radius:4px;
+  padding:12px 14px;background:#0d0d0d;
+  transition:border-color .15s,transform .15s;cursor:default;
+}
+.a-project-card:hover{border-color:#22c55e44;transform:translateY(-1px);}
+.a-project-card.hidden{display:none;}
+.a-pcard-header{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:6px;
+}
+.a-pcard-name{font-size:11px;font-weight:600;color:#fafafa;}
+.a-pcard-lang{font-size:9px;color:#22c55e;}
+.a-pcard-meta{font-size:9px;color:#52525b;margin-bottom:6px;letter-spacing:0.04em;}
+.a-pcard-desc{font-size:10px;color:#737373;line-height:1.55;margin-bottom:8px;font-family:'IBM Plex Sans',sans-serif;}
+.a-pcard-topics{display:flex;flex-wrap:wrap;gap:4px;}
+.a-pcard-topic{
+  font-size:8px;color:#3f3f46;
+  border:1px solid #1c1c1c;border-radius:2px;
+  padding:1px 6px;letter-spacing:0.04em;
+}
+.a-pcard-links{display:flex;gap:8px;margin-top:8px;}
+.a-pcard-link{font-size:9px;color:#52525b;text-decoration:none;transition:color .15s;}
+.a-pcard-link:hover{color:#22c55e;}
+
+/* Contact section */
+.a-contact{padding:0 24px 48px;}
+.a-contact-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  gap:8px;margin-top:16px;
+}
+.a-contact-card{
+  border:1px solid #1c1c1c;border-radius:4px;
+  padding:12px 14px;background:#0d0d0d;
+  transition:border-color .15s;cursor:pointer;
+}
+.a-contact-card:hover{border-color:#22c55e44;}
+.a-cc-key{font-size:9px;color:#52525b;margin-bottom:4px;letter-spacing:0.06em;}
+.a-cc-val{font-size:11px;color:#22c55e;}
+
+
+/* ══════════════════════════════════════════
+   SAMPLE B — TERMINAL-INSPIRED
+══════════════════════════════════════════ */
+#sample-b{
+  background:#0a0a0a;
+  color:#e2e8f0;
+  font-family:'IBM Plex Sans',sans-serif;
+  min-height:100vh;
+}
+
+/* Nav */
+.b-nav{
+  position:sticky;top:44px;z-index:100;
+  height:56px;
+  display:flex;align-items:center;
+  padding:0 32px;
+  justify-content:space-between;
+  transition:background .3s,border .3s;
+}
+.b-nav.scrolled{background:rgba(10,10,10,0.9);backdrop-filter:blur(12px);border-bottom:1px solid #161616;}
+.b-logo{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:14px;font-weight:600;color:#fafafa;
+  display:flex;align-items:center;gap:8px;
+}
+.b-logo-dot{width:6px;height:6px;background:#22c55e;border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,0.4)}50%{box-shadow:0 0 0 6px transparent}}
+.b-nav-links{display:flex;align-items:center;gap:24px;}
+.b-nav-link{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;color:#52525b;
+  cursor:pointer;transition:color .15s;
+  text-decoration:none;letter-spacing:0.04em;
+}
+.b-nav-link:hover{color:#22c55e;}
+.b-nav-gh{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;font-weight:600;
+  padding:6px 14px;border-radius:5px;
+  border:1px solid #1c1c1c;color:#a3a3a3;
+  background:transparent;cursor:pointer;
+  transition:all .15s;letter-spacing:0.04em;
+  text-decoration:none;display:inline-block;
+}
+.b-nav-gh:hover{border-color:#22c55e44;color:#22c55e;}
+
+/* Hero */
+.b-hero{
+  min-height:calc(100vh - 100px);
+  display:flex;flex-direction:column;justify-content:center;
+  padding:60px 32px 80px;
+  position:relative;overflow:hidden;
+}
+.b-hero-glow{
+  position:absolute;
+  width:500px;height:500px;
+  background:radial-gradient(circle,rgba(34,197,94,0.07) 0%,transparent 65%);
+  top:-100px;right:-100px;
+  pointer-events:none;
+}
+.b-hero-glow2{
+  position:absolute;
+  width:300px;height:300px;
+  background:radial-gradient(circle,rgba(34,197,94,0.04) 0%,transparent 65%);
+  bottom:-50px;left:50px;
+  pointer-events:none;
+}
+.b-hero-grid{
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(34,197,94,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(34,197,94,0.03) 1px,transparent 1px);
+  background-size:40px 40px;
+  pointer-events:none;
+}
+.b-available{
+  display:inline-flex;align-items:center;gap:7px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;color:#22c55e;
+  border:1px solid rgba(34,197,94,0.2);
+  border-radius:3px;padding:4px 12px;
+  margin-bottom:28px;letter-spacing:0.06em;
+  width:fit-content;
+  position:relative;z-index:1;
+}
+.b-available::before{content:'●';font-size:6px;animation:pulse 2s infinite;}
+.b-name{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:clamp(40px,6vw,72px);
+  font-weight:600;
+  line-height:1;
+  letter-spacing:-0.02em;
+  color:#fafafa;
+  margin-bottom:16px;
+  position:relative;z-index:1;
+}
+.b-name-accent{color:#22c55e;}
+.b-role{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:13px;color:#52525b;
+  letter-spacing:0.06em;margin-bottom:20px;
+  position:relative;z-index:1;
+}
+.b-role::before{content:'// ';}
+.b-typewriter{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:14px;color:#a3a3a3;
+  margin-bottom:28px;height:22px;
+  position:relative;z-index:1;
+}
+.b-tw-cursor{
+  display:inline-block;width:2px;height:16px;
+  background:#22c55e;vertical-align:middle;
+  animation:blink 1s step-end infinite;
+  margin-left:1px;
+}
+.b-tags{
+  display:flex;flex-wrap:wrap;gap:6px;
+  margin-bottom:32px;position:relative;z-index:1;
+}
+.b-tag{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:9px;font-weight:500;letter-spacing:0.06em;
+  color:#22c55e;border:1px solid rgba(34,197,94,0.2);
+  border-radius:2px;padding:3px 9px;
+}
+.b-hero-btns{display:flex;gap:10px;position:relative;z-index:1;flex-wrap:wrap;}
+.b-btn-p{
+  padding:10px 22px;
+  background:#22c55e;color:#000;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;font-weight:700;letter-spacing:0.06em;
+  border-radius:4px;border:none;cursor:pointer;
+  transition:all .2s;
+}
+.b-btn-p:hover{background:#4ade80;transform:translateY(-1px);box-shadow:0 8px 24px rgba(34,197,94,0.2);}
+.b-btn-s{
+  padding:10px 22px;
+  background:transparent;color:#52525b;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;letter-spacing:0.06em;
+  border-radius:4px;border:1px solid #262626;cursor:pointer;
+  transition:all .2s;
+}
+.b-btn-s:hover{border-color:#22c55e33;color:#22c55e;}
+.b-stats{
+  display:flex;gap:32px;
+  margin-top:48px;padding-top:28px;
+  border-top:1px solid #161616;
+  position:relative;z-index:1;
+  flex-wrap:wrap;
+}
+.b-stat-val{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:28px;font-weight:600;
+  color:#fafafa;display:block;margin-bottom:2px;
+}
+.b-stat-label{font-size:11px;color:#52525b;letter-spacing:0.04em;}
+
+/* Projects section */
+.b-projects{padding:72px 32px;}
+.b-sec-eyebrow{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;color:#22c55e;
+  letter-spacing:0.14em;text-transform:uppercase;
+  margin-bottom:8px;display:block;
+}
+.b-sec-title{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:32px;font-weight:600;color:#fafafa;
+  margin-bottom:8px;letter-spacing:-0.01em;
+}
+.b-sec-sub{font-size:14px;color:#52525b;margin-bottom:32px;line-height:1.6;max-width:520px;}
+.b-filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:32px;}
+.b-filter{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;letter-spacing:0.05em;
+  padding:5px 14px;border-radius:3px;
+  border:1px solid #1c1c1c;background:transparent;
+  color:#52525b;cursor:pointer;transition:all .15s;
+}
+.b-filter:hover{border-color:#22c55e33;color:#22c55e;}
+.b-filter.active{background:#22c55e;color:#000;border-color:#22c55e;font-weight:600;}
+.b-project-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:12px;
+}
+.b-pcard{
+  background:#0d0d0d;border:1px solid #161616;border-radius:8px;
+  padding:18px 18px 14px;
+  transition:all .2s;cursor:default;
+  display:flex;flex-direction:column;
+}
+.b-pcard:hover{border-color:#22c55e22;transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,0.3);}
+.b-pcard.hidden{display:none;}
+.b-pcard-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:8px;}
+.b-pcard-badges{display:flex;gap:5px;flex-wrap:wrap;}
+.b-pcard-lang{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:9px;display:flex;align-items:center;gap:4px;
+  color:#737373;
+}
+.b-lang-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.b-pcard-cat{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:8px;letter-spacing:0.06em;
+  padding:2px 7px;border-radius:2px;
+}
+.b-pcard-featured{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:8px;color:#22c55e;
+  border:1px solid rgba(34,197,94,0.25);
+  border-radius:2px;padding:2px 7px;
+}
+.b-pcard-links-top{display:flex;gap:6px;}
+.b-pcard-ico{
+  font-size:11px;color:#3f3f46;
+  cursor:pointer;transition:color .15s;
+  text-decoration:none;padding:2px;
+}
+.b-pcard-ico:hover{color:#22c55e;}
+.b-pcard-name{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:13px;font-weight:600;color:#fafafa;
+  margin-bottom:7px;
+  transition:color .15s;cursor:pointer;
+}
+.b-pcard:hover .b-pcard-name{color:#22c55e;}
+.b-pcard-desc{
+  font-size:12px;color:#52525b;line-height:1.6;
+  flex:1;margin-bottom:12px;
+}
+.b-pcard-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  border-top:1px solid #161616;padding-top:10px;margin-top:auto;
+}
+.b-pcard-topics{display:flex;flex-wrap:wrap;gap:4px;}
+.b-pcard-topic{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:8px;color:#3f3f46;
+  border:1px solid #1c1c1c;border-radius:2px;
+  padding:1px 6px;
+}
+.b-pcard-stats{
+  display:flex;gap:10px;font-family:'IBM Plex Mono',monospace;
+  font-size:9px;color:#3f3f46;flex-shrink:0;
+}
+
+/* Contact section */
+.b-contact{
+  padding:72px 32px 80px;
+  border-top:1px solid #161616;
+  text-align:center;
+}
+.b-contact-sub{font-size:14px;color:#52525b;margin:16px auto 40px;max-width:480px;line-height:1.6;}
+.b-contact-cards{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;}
+.b-ccard{
+  background:#0d0d0d;border:1px solid #161616;border-radius:8px;
+  padding:18px 24px;min-width:180px;
+  transition:all .2s;cursor:pointer;text-decoration:none;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+}
+.b-ccard:hover{border-color:#22c55e33;transform:translateY(-2px);}
+.b-ccard-icon{font-size:18px;}
+.b-ccard-label{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:#fafafa;}
+.b-ccard-sub{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#52525b;}
+
+/* Fade-in animation */
+.fade-up{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;}
+.fade-up.visible{opacity:1;transform:translateY(0);}
+
+/* Footer */
+.b-footer,.a-footer{
+  border-top:1px solid #161616;padding:20px 32px;
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;color:#3f3f46;
+  flex-wrap:wrap;gap:8px;
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════
+     TAB SWITCHER
+═══════════════════════════════ -->
+<div class="switcher">
+  <span class="switcher-label">// samples:</span>
+  <button class="tab-btn active" onclick="showSample('a')">A — Full Terminal</button>
+  <button class="tab-btn" onclick="showSample('b')">B — Terminal-Inspired</button>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     SAMPLE A — FULL TERMINAL
+═══════════════════════════════════════════════════ -->
+<div id="sample-a" class="sample active">
+
+  <!-- Nav -->
+  <nav class="a-nav">
+    <div class="a-nav-path">~/<span>aks-builds</span></div>
+    <div class="a-nav-links">
+      <a class="a-nav-link" href="#a-hero">./</a>
+      <a class="a-nav-link" href="#a-projects">projects</a>
+      <a class="a-nav-link" href="#a-contact">contact</a>
+      <a class="a-nav-link" style="color:#22c55e44;" href="https://github.com/aks-builds" target="_blank">github ↗</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section id="a-hero" class="a-hero">
+    <div class="term-win">
+      <div class="term-titlebar">
+        <div class="dot" style="background:#ef4444"></div>
+        <div class="dot" style="background:#f59e0b"></div>
+        <div class="dot" style="background:#22c55e"></div>
+        <span class="title">aditya@portfolio — zsh — 80×24</span>
+      </div>
+      <div class="term-body">
+        <div class="a-line"><span class="a-prompt">~/portfolio  </span><span class="a-cmd" id="a-cmd1"></span></div>
+        <div id="a-hero-output" style="display:none">
+          <div class="a-output name-line">Aditya S.<span class="blink-cursor"></span></div>
+          <div class="a-output role-line">CLOUD_NATIVE_QUALITY_ENGINEER</div>
+          <div class="a-output bio-line">Building AI developer tools, test automation<br>frameworks, and open-source solutions that make<br>engineers ship better software, faster.</div>
+          <div class="a-output stats">repos: <span>16</span>  &nbsp;npm-packages: <span>5+</span>  &nbsp;agent-skills: <span>50+</span>  &nbsp;hireable: <span>true</span></div>
+          <div class="a-actions">
+            <button class="a-btn a-btn-p" onclick="scrollToId('a-projects')">./projects</button>
+            <button class="a-btn a-btn-s" onclick="window.open('https://github.com/aks-builds','_blank')">github ↗</button>
+          </div>
+        </div>
+        <div class="a-line" id="a-cmd2-line" style="display:none;margin-top:16px">
+          <span class="a-prompt">~/portfolio  </span><span class="a-cmd">ls -la ./skills</span>
+        </div>
+        <div id="a-skills-output" style="display:none;margin-top:6px">
+          <div class="a-output" style="color:#52525b;font-size:10px;">total 50</div>
+          <div class="a-output" style="font-size:10px;color:#737373;">drwxr-xr-x  Python · TypeScript · C# · PowerShell</div>
+          <div class="a-output" style="font-size:10px;color:#737373;">drwxr-xr-x  Playwright · Selenium · k6 · Newman</div>
+          <div class="a-output" style="font-size:10px;color:#737373;">drwxr-xr-x  Claude-Code · MCP · Docker · GitHub-Actions</div>
+          <div class="a-output" style="font-size:10px;color:#737373;">drwxr-xr-x  Electron · React · Unity · Tailwind</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="a-projects" class="a-projects">
+    <div class="term-win">
+      <div class="term-titlebar">
+        <div class="dot" style="background:#ef4444"></div>
+        <div class="dot" style="background:#f59e0b"></div>
+        <div class="dot" style="background:#22c55e"></div>
+        <span class="title">~/portfolio/projects — filter: all</span>
+      </div>
+      <div class="term-body">
+        <div class="a-sec-header">
+          <span class="a-prompt">~/portfolio  </span><span class="a-cmd">ls ./projects</span>
+        </div>
+        <div class="a-filter-line">
+          <span class="a-filter-label"><span>grep</span> --type=</span>
+          <button class="a-filter-btn active" onclick="aFilter('all',this)">all</button>
+          <button class="a-filter-btn" onclick="aFilter('devtools',this)">devtools</button>
+          <button class="a-filter-btn" onclick="aFilter('ai',this)">ai</button>
+          <button class="a-filter-btn" onclick="aFilter('qa',this)">qa</button>
+          <button class="a-filter-btn" onclick="aFilter('security',this)">security</button>
+          <button class="a-filter-btn" onclick="aFilter('gaming',this)">gaming</button>
+          <button class="a-filter-btn" onclick="aFilter('devops',this)">devops</button>
+        </div>
+        <div class="a-project-grid" id="a-grid"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="a-contact" class="a-contact">
+    <div class="term-win">
+      <div class="term-titlebar">
+        <div class="dot" style="background:#ef4444"></div>
+        <div class="dot" style="background:#f59e0b"></div>
+        <div class="dot" style="background:#22c55e"></div>
+        <span class="title">~/portfolio/contact — zsh</span>
+      </div>
+      <div class="term-body">
+        <div class="a-line"><span class="a-prompt">~/portfolio  </span><span class="a-cmd">cat ./contact.json</span></div>
+        <div style="margin-top:12px">
+          <div class="a-contact-grid">
+            <div class="a-contact-card" onclick="window.open('https://github.com/aks-builds','_blank')">
+              <div class="a-cc-key">github</div>
+              <div class="a-cc-val">@aks-builds</div>
+            </div>
+            <div class="a-contact-card" onclick="window.open('mailto:its.aks@outlook.com')">
+              <div class="a-cc-key">email</div>
+              <div class="a-cc-val">its.aks@outlook.com</div>
+            </div>
+            <div class="a-contact-card" onclick="window.open('https://www.npmjs.com/~aks-builds','_blank')">
+              <div class="a-cc-key">npm</div>
+              <div class="a-cc-val">aks-builds packages</div>
+            </div>
+          </div>
+          <div style="margin-top:16px;font-size:10px;color:#3f3f46;">
+            <span class="a-prompt">  </span>status: <span style="color:#22c55e;">HIREABLE</span>  open_to: ["full-time","contract","remote"]
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="a-footer">
+    <span>~/portfolio — aks-builds</span>
+    <span style="color:#22c55e;">exit 0</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     SAMPLE B — TERMINAL-INSPIRED
+═══════════════════════════════════════════════════ -->
+<div id="sample-b" class="sample">
+
+  <nav class="b-nav" id="b-nav">
+    <div class="b-logo">
+      <div class="b-logo-dot"></div>
+      aks-builds
+    </div>
+    <div class="b-nav-links">
+      <a class="b-nav-link" href="#b-projects">./projects</a>
+      <a class="b-nav-link" href="#b-contact">./contact</a>
+      <a class="b-nav-gh" href="https://github.com/aks-builds" target="_blank">github ↗</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section id="b-hero" class="b-hero">
+    <div class="b-hero-grid"></div>
+    <div class="b-hero-glow"></div>
+    <div class="b-hero-glow2"></div>
+
+    <div class="b-available">available for new opportunities</div>
+
+    <div class="b-name">
+      Aditya<span class="b-name-accent">.</span>
+    </div>
+
+    <div class="b-role">Cloud Native Quality Engineer</div>
+
+    <div class="b-typewriter">
+      <span id="b-tw-text"></span><span class="b-tw-cursor"></span>
+    </div>
+
+    <div class="b-tags">
+      <span class="b-tag">AI Tools</span>
+      <span class="b-tag">QA Engineering</span>
+      <span class="b-tag">Claude Code</span>
+      <span class="b-tag">MCP</span>
+      <span class="b-tag">Test Automation</span>
+      <span class="b-tag">DevSecOps</span>
+    </div>
+
+    <div class="b-hero-btns">
+      <button class="b-btn-p" onclick="scrollToId('b-projects')">View Projects →</button>
+      <button class="b-btn-s" onclick="window.open('https://github.com/aks-builds','_blank')">GitHub ↗</button>
+    </div>
+
+    <div class="b-stats">
+      <div>
+        <span class="b-stat-val">16</span>
+        <span class="b-stat-label">repositories</span>
+      </div>
+      <div>
+        <span class="b-stat-val">5+</span>
+        <span class="b-stat-label">npm packages</span>
+      </div>
+      <div>
+        <span class="b-stat-val">50+</span>
+        <span class="b-stat-label">agent skills</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="b-projects" class="b-projects fade-up">
+    <span class="b-sec-eyebrow">// open source</span>
+    <h2 class="b-sec-title">Projects & Solutions</h2>
+    <p class="b-sec-sub">Tools, frameworks, and libraries built to solve real engineering problems — all open source on GitHub.</p>
+
+    <div class="b-filters">
+      <button class="b-filter active" onclick="bFilter('all',this)">all</button>
+      <button class="b-filter" onclick="bFilter('devtools',this)">dev tools</button>
+      <button class="b-filter" onclick="bFilter('ai',this)">ai / ml</button>
+      <button class="b-filter" onclick="bFilter('qa',this)">qa &amp; testing</button>
+      <button class="b-filter" onclick="bFilter('security',this)">security</button>
+      <button class="b-filter" onclick="bFilter('gaming',this)">gaming</button>
+      <button class="b-filter" onclick="bFilter('devops',this)">devops</button>
+    </div>
+
+    <div class="b-project-grid" id="b-grid"></div>
+  </section>
+
+  <!-- Contact -->
+  <section id="b-contact" class="b-contact fade-up">
+    <span class="b-sec-eyebrow">// contact</span>
+    <h2 class="b-sec-title">Let's Connect</h2>
+    <p class="b-contact-sub">Open to new opportunities, collaborations, and interesting projects.</p>
+    <div class="b-contact-cards">
+      <a class="b-ccard" href="https://github.com/aks-builds" target="_blank">
+        <span class="b-ccard-icon">⌥</span>
+        <span class="b-ccard-label">GitHub</span>
+        <span class="b-ccard-sub">@aks-builds</span>
+      </a>
+      <a class="b-ccard" href="mailto:its.aks@outlook.com">
+        <span class="b-ccard-icon">@</span>
+        <span class="b-ccard-label">Email</span>
+        <span class="b-ccard-sub">its.aks@outlook.com</span>
+      </a>
+      <a class="b-ccard" href="https://www.npmjs.com/~aks-builds" target="_blank">
+        <span class="b-ccard-icon">⬡</span>
+        <span class="b-ccard-label">npm</span>
+        <span class="b-ccard-sub">aks-builds</span>
+      </a>
+    </div>
+  </section>
+
+  <footer class="b-footer">
+    <span>// aks-builds · Cloud Native Quality Engineer</span>
+    <span style="color:#22c55e;">hireable: true</span>
+  </footer>
+</div>
+
+
+<script>
+/* ═══════════════════════
+   DATA
+═══════════════════════ */
+const PROJECTS = [
+  {name:'cliproof',desc:'Your README should show it works — not just say it. Captures real terminal output as polished screenshots/GIFs, redacts secrets, embeds into README.',url:'https://github.com/aks-builds/cliproof',homepage:'https://www.npmjs.com/package/cliproof',lang:'Python',langColor:'#3572A5',cat:'devtools',featured:true,topics:['ai','claude-code','mcp','docker','cli']},
+  {name:'ai-test-failure-analyzer',desc:'Traces Playwright, Jest, Cypress, Newman, k6 and JUnit failures through git, logs, and config — no guesses, no fixture noise.',url:'https://github.com/aks-builds/ai-test-failure-analyzer',homepage:'https://www.npmjs.com/package/ai-test-failure-analyzer',lang:'Python',langColor:'#3572A5',cat:'ai',featured:true,topics:['ai','mcp','playwright','qa','root-cause']},
+  {name:'openspecpm',desc:'Spec-driven, BDD-shaped project management for AI agents. OpenSpec proposals → BDD specs → tracked work in GitHub / Jira / Linear.',url:'https://github.com/aks-builds/openspecpm',homepage:'https://www.npmjs.com/package/openspecpm',lang:'JavaScript',langColor:'#f1e05a',cat:'devtools',featured:true,topics:['bdd','claude-code','jira','linear','github']},
+  {name:'Hitro',desc:'Local-first desktop API client — REST, gRPC, GraphQL, WebSocket, Kafka, AWS SQS, MQTT, SSE — with mock server and load testing.',url:'https://github.com/aks-builds/Hitro',lang:'TypeScript',langColor:'#3178c6',cat:'devtools',featured:true,topics:['electron','react','grpc','graphql','kafka']},
+  {name:'reqweave',desc:'Read service code; generate ready-to-import API collections for Postman, OpenAPI, Insomnia, Bruno, Hoppscotch — with exhaustive variants.',url:'https://github.com/aks-builds/reqweave',lang:'TypeScript',langColor:'#3178c6',cat:'devtools',topics:['openapi','postman','api-testing']},
+  {name:'quality-skills',desc:'50 production-focused Quality Engineering Claude Code skills for QA Engineers, SDETs, and Automation Architects.',url:'https://github.com/aks-builds/quality-skills',lang:null,cat:'ai',featured:true,topics:['claude-code','claude-skills','qa']},
+  {name:'healthcareskills',desc:'41 Agent Skills that make AI coding tools fluent in healthcare — FHIR, HL7v2, DICOM, HIPAA, clinical workflows, and compliance.',url:'https://github.com/aks-builds/healthcareskills',lang:null,cat:'ai',featured:true,topics:['claude-code','fhir','hipaa','healthcare']},
+  {name:'clausa',desc:'Local-first, privacy-first AI that decodes any insurance policy into plain English — coverage, exclusions, gaps, and questions to ask.',url:'https://github.com/aks-builds/clausa',lang:'Python',langColor:'#3572A5',cat:'ai',topics:['llm','privacy','ollama','pdf']},
+  {name:'playwright-userauth-api-suite',desc:'Production-grade Playwright API test suite for the UserAuth service; consumer of ai-test-failure-analyzer.',url:'https://github.com/aks-builds/playwright-userauth-api-suite',lang:'TypeScript',langColor:'#3178c6',cat:'qa',topics:['playwright','api-testing','ci']},
+  {name:'Selenium-LLM-Prompts',desc:'Ready-to-use LLM prompts for generating production-grade Selenium test automation.',url:'https://github.com/aks-builds/Selenium-Automation-Ready-Prompts-with-LLM',lang:null,cat:'qa',topics:['selenium','llm','prompts']},
+  {name:'Smart-Test-Data-AI',desc:"Companion code for the talk 'Smart Test Data — Faker vs AI': generating realistic test data with LLMs vs Faker.js.",url:'https://github.com/aks-builds/Smart-Test-Data-AI-vs-Faker.js',lang:'HTML',langColor:'#e34c26',cat:'qa',topics:['faker','llm','test-data']},
+  {name:'awesome-owasp-security-testing',desc:'Curated OWASP projects and tools for DAST, SAST, SCA/SBOM, secret scanning, IaC scanning, threat modeling, and DevSecOps.',url:'https://github.com/aks-builds/awesome-owasp-security-testing',lang:null,cat:'security',featured:true,topics:['owasp','sast','devsecops','sbom']},
+  {name:'workflows',desc:'Reusable GitHub Actions workflows and automation scripts shared across repositories. Drop-in CI/CD primitives.',url:'https://github.com/aks-builds/workflows',lang:'PowerShell',langColor:'#012456',cat:'devops',topics:['github-actions','ci-cd','reusable']},
+  {name:'formula-sim-pro-unity',desc:'F1 simulation game built with Unity — realistic physics, circuit replicas, and race weekend mechanics.',url:'https://github.com/aks-builds/formula-sim-pro-unity',lang:'C#',langColor:'#239120',cat:'gaming',topics:['unity','formula1','physics','game-dev']},
+  {name:'minimal-desktop-setup',desc:'Minimal Windows 11 desktop using Rainmeter — monochrome aesthetic with Mond clock and weather widget.',url:'https://github.com/aks-builds/minimal-desktop-setup',lang:'Pascal',langColor:'#E3F171',cat:'devtools',topics:['rainmeter','windows','minimal']},
+];
+
+const CAT_STYLES = {
+  devtools:{label:'Dev Tools',bg:'rgba(59,130,246,0.1)',color:'#60a5fa'},
+  ai:{label:'AI / ML',bg:'rgba(139,92,246,0.1)',color:'#a78bfa'},
+  qa:{label:'QA',bg:'rgba(34,197,94,0.08)',color:'#4ade80'},
+  security:{label:'Security',bg:'rgba(249,115,22,0.1)',color:'#fb923c'},
+  gaming:{label:'Gaming',bg:'rgba(236,72,153,0.1)',color:'#f472b6'},
+  devops:{label:'DevOps',bg:'rgba(245,158,11,0.1)',color:'#fbbf24'},
+};
+
+/* ═══════════════════════
+   TAB SWITCHER
+═══════════════════════ */
+function showSample(name) {
+  document.querySelectorAll('.sample').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('sample-'+name).classList.add('active');
+  event.target.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function scrollToId(id){
+  const el=document.getElementById(id);
+  if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ═══════════════════════
+   RENDER GRIDS
+═══════════════════════ */
+function renderAGrid(){
+  const grid=document.getElementById('a-grid');
+  grid.innerHTML=PROJECTS.map(p=>`
+    <div class="a-project-card" data-cat="${p.cat}">
+      <div class="a-pcard-header">
+        <span class="a-pcard-name">${p.name}</span>
+        <span class="a-pcard-lang">${p.lang||'—'}</span>
+      </div>
+      <div class="a-pcard-meta">${p.featured?'[featured]  ':''}-rw-r--r--  ${p.cat}</div>
+      <div class="a-pcard-desc">${p.desc}</div>
+      <div class="a-pcard-topics">${p.topics.slice(0,4).map(t=>`<span class="a-pcard-topic">${t}</span>`).join('')}</div>
+      <div class="a-pcard-links">
+        <a class="a-pcard-link" href="${p.url}" target="_blank">github ↗</a>
+        ${p.homepage?`<a class="a-pcard-link" href="${p.homepage}" target="_blank">npm ↗</a>`:''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderBGrid(){
+  const grid=document.getElementById('b-grid');
+  grid.innerHTML=PROJECTS.map(p=>{
+    const cs=CAT_STYLES[p.cat]||{};
+    return `
+    <div class="b-pcard" data-cat="${p.cat}">
+      <div class="b-pcard-top">
+        <div class="b-pcard-badges">
+          ${p.lang?`<span class="b-pcard-lang"><span class="b-lang-dot" style="background:${p.langColor}"></span>${p.lang}</span>`:''}
+          <span class="b-pcard-cat" style="background:${cs.bg||'transparent'};color:${cs.color||'#52525b'}">${cs.label||p.cat}</span>
+          ${p.featured?'<span class="b-pcard-featured">★ featured</span>':''}
+        </div>
+        <div class="b-pcard-links-top">
+          ${p.homepage?`<a class="b-pcard-ico" href="${p.homepage}" target="_blank">⬡</a>`:''}
+          <a class="b-pcard-ico" href="${p.url}" target="_blank">⌥</a>
+        </div>
+      </div>
+      <div class="b-pcard-name">${p.name}</div>
+      <div class="b-pcard-desc">${p.desc}</div>
+      <div class="b-pcard-footer">
+        <div class="b-pcard-topics">${p.topics.slice(0,3).map(t=>`<span class="b-pcard-topic">${t}</span>`).join('')}</div>
+        <div class="b-pcard-stats"><span>★ 0</span><span>⑂ 0</span></div>
+      </div>
+    </div>
+    `;
+  }).join('');
+}
+
+/* ═══════════════════════
+   FILTERS
+═══════════════════════ */
+function aFilter(cat,btn){
+  document.querySelectorAll('.a-filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#a-grid .a-project-card').forEach(c=>{
+    c.classList.toggle('hidden', cat!=='all' && c.dataset.cat!==cat);
+  });
+}
+function bFilter(cat,btn){
+  document.querySelectorAll('.b-filter').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#b-grid .b-pcard').forEach(c=>{
+    c.classList.toggle('hidden', cat!=='all' && c.dataset.cat!==cat);
+  });
+}
+
+/* ═══════════════════════
+   TYPEWRITER (Sample B)
+═══════════════════════ */
+const B_PHRASES=['Building AI developer tools','Engineering test automation','Shipping Claude Code skills','Tracing test failures to root cause','Crafting open-source solutions'];
+let bPhrase=0,bChar=0,bDeleting=false;
+function bTypewriter(){
+  const el=document.getElementById('b-tw-text');
+  if(!el)return;
+  const cur=B_PHRASES[bPhrase];
+  if(!bDeleting){
+    el.textContent=cur.slice(0,++bChar);
+    if(bChar===cur.length){bDeleting=true;setTimeout(bTypewriter,2000);return;}
+  } else {
+    el.textContent=cur.slice(0,--bChar);
+    if(bChar===0){bDeleting=false;bPhrase=(bPhrase+1)%B_PHRASES.length;}
+  }
+  setTimeout(bTypewriter,bDeleting?40:65);
+}
+
+/* ═══════════════════════
+   TERMINAL BOOT ANIMATION (Sample A)
+═══════════════════════ */
+function typeText(el, text, speed, cb){
+  let i=0;
+  el.textContent='';
+  const t=setInterval(()=>{
+    el.textContent+=text[i++];
+    if(i>=text.length){clearInterval(t);if(cb)cb();}
+  },speed);
+}
+function bootA(){
+  const cmd1=document.getElementById('a-cmd1');
+  if(!cmd1)return;
+  typeText(cmd1,'whoami',55,()=>{
+    setTimeout(()=>{
+      document.getElementById('a-hero-output').style.display='block';
+      setTimeout(()=>{
+        const cmd2Line=document.getElementById('a-cmd2-line');
+        cmd2Line.style.display='block';
+        setTimeout(()=>{
+          document.getElementById('a-skills-output').style.display='block';
+        },600);
+      },800);
+    },200);
+  });
+}
+
+/* ═══════════════════════
+   SCROLL EFFECTS
+═══════════════════════ */
+function initScrollEffects(){
+  // B nav scroll
+  const bNav=document.getElementById('b-nav');
+  window.addEventListener('scroll',()=>{
+    if(document.getElementById('sample-b').classList.contains('active')){
+      bNav.classList.toggle('scrolled',window.scrollY>60);
+    }
+  },{passive:true});
+
+  // Fade-up observer
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+  },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+}
+
+/* ═══════════════════════
+   INIT
+═══════════════════════ */
+renderAGrid();
+renderBGrid();
+bootA();
+bTypewriter();
+initScrollEffects();
+</script>
+</body>
+</html>

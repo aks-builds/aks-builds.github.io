@@ -3,121 +3,83 @@ import { Star, GitFork, ExternalLink, Github } from 'lucide-react'
 import type { Repo } from '../types'
 import { LANGUAGE_COLORS } from '../data/repos'
 
-interface Props {
-  repo: Repo
-  index: number
+const CAT: Record<string, { label: string; bg: string; color: string }> = {
+  devtools: { label: 'Dev Tools', bg: 'rgba(59,130,246,.1)',   color: '#60a5fa' },
+  ai:       { label: 'AI / ML',   bg: 'rgba(139,92,246,.1)',  color: '#a78bfa' },
+  qa:       { label: 'QA',        bg: 'rgba(34,197,94,.08)',  color: '#4ade80' },
+  security: { label: 'Security',  bg: 'rgba(249,115,22,.1)',  color: '#fb923c' },
+  gaming:   { label: 'Gaming',    bg: 'rgba(236,72,153,.1)',  color: '#f472b6' },
+  devops:   { label: 'DevOps',    bg: 'rgba(245,158,11,.1)',  color: '#fbbf24' },
 }
 
-const CATEGORY_STYLES: Record<string, { label: string; bg: string; text: string }> = {
-  devtools: { label: 'Dev Tools', bg: 'bg-blue-500/10', text: 'text-blue-400' },
-  ai: { label: 'AI / ML', bg: 'bg-violet-500/10', text: 'text-violet-400' },
-  qa: { label: 'QA & Testing', bg: 'bg-emerald-500/10', text: 'text-emerald-400' },
-  security: { label: 'Security', bg: 'bg-orange-500/10', text: 'text-orange-400' },
-  gaming: { label: 'Gaming', bg: 'bg-pink-500/10', text: 'text-pink-400' },
-  devops: { label: 'DevOps', bg: 'bg-amber-500/10', text: 'text-amber-400' },
-}
-
-export default function ProjectCard({ repo, index }: Props) {
-  const langColor = repo.language ? (LANGUAGE_COLORS[repo.language] ?? '#64748b') : '#64748b'
-  const cat = CATEGORY_STYLES[repo.category]
-  const showTopics = repo.topics.slice(0, 3)
+export default function ProjectCard({ repo, index }: { repo: Repo; index: number }) {
+  const lc  = repo.language ? (LANGUAGE_COLORS[repo.language] ?? '#64748b') : '#64748b'
+  const cat = CAT[repo.category]
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 0, y: 18 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.45, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
-      className="glass-card gradient-border rounded-xl p-5 flex flex-col h-full group hover:-translate-y-1 transition-transform duration-250"
+      transition={{ duration: .4, delay: index * .05, ease: [.22,1,.36,1] }}
+      className="glass-card rounded-lg p-4 flex flex-col h-full hover:-translate-y-0.5 transition-transform duration-200"
     >
-      {/* Header row */}
-      <div className="flex items-start justify-between gap-3 mb-3">
-        <div className="flex items-center gap-2 flex-wrap">
+      {/* Top row */}
+      <div className="flex items-start justify-between gap-2 mb-3">
+        <div className="flex items-center gap-1.5 flex-wrap">
           {repo.language && (
-            <span className="flex items-center gap-1 text-xs text-slate-400">
-              <span
-                className="w-2.5 h-2.5 rounded-full flex-shrink-0"
-                style={{ background: langColor }}
-              />
+            <span className="flex items-center gap-1 font-mono text-[9px] text-muted">
+              <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: lc }} />
               {repo.language}
             </span>
           )}
           {cat && (
-            <span
-              className={`px-2 py-0.5 rounded-full text-xs font-medium ${cat.bg} ${cat.text}`}
-            >
+            <span className="font-mono text-[8px] px-1.5 py-0.5 rounded-sm" style={{ background: cat.bg, color: cat.color }}>
               {cat.label}
             </span>
           )}
           {repo.featured && (
-            <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-primary/15 text-primary-light border border-primary/20">
-              Featured
+            <span className="font-mono text-[8px] px-1.5 py-0.5 rounded-sm text-primary border border-primary/20 bg-primary/8">
+              ★ featured
             </span>
           )}
         </div>
-
-        {/* Action links */}
-        <div className="flex items-center gap-1.5 flex-shrink-0">
+        <div className="flex items-center gap-1 flex-shrink-0">
           {repo.homepage && (
-            <a
-              href={repo.homepage}
-              target="_blank"
-              rel="noreferrer"
-              className="p-1.5 rounded-lg text-slate-500 hover:text-accent hover:bg-accent/10 transition-all duration-200"
-              title="Homepage"
-              onClick={e => e.stopPropagation()}
-            >
-              <ExternalLink size={13} />
+            <a href={repo.homepage} target="_blank" rel="noreferrer"
+              className="p-1 text-muted/50 hover:text-primary transition-colors" title="Homepage">
+              <ExternalLink size={11} />
             </a>
           )}
-          <a
-            href={repo.url}
-            target="_blank"
-            rel="noreferrer"
-            className="p-1.5 rounded-lg text-slate-500 hover:text-slate-200 hover:bg-white/8 transition-all duration-200"
-            title="GitHub"
-            onClick={e => e.stopPropagation()}
-          >
-            <Github size={13} />
+          <a href={repo.url} target="_blank" rel="noreferrer"
+            className="p-1 text-muted/50 hover:text-slate-300 transition-colors" title="GitHub">
+            <Github size={11} />
           </a>
         </div>
       </div>
 
-      {/* Repo name */}
-      <a
-        href={repo.url}
-        target="_blank"
-        rel="noreferrer"
-        className="font-display font-semibold text-slate-100 hover:text-primary-light transition-colors duration-200 mb-2 text-sm leading-snug line-clamp-1"
-      >
+      {/* Name */}
+      <a href={repo.url} target="_blank" rel="noreferrer"
+        className="font-mono text-[13px] font-semibold text-slate-100 hover:text-primary transition-colors mb-2 line-clamp-1">
         {repo.name}
       </a>
 
       {/* Description */}
-      <p className="text-xs text-slate-500 leading-relaxed flex-1 line-clamp-3 mb-4">
+      <p className="text-[12px] text-muted leading-relaxed font-sans flex-1 line-clamp-3 mb-3">
         {repo.description}
       </p>
 
       {/* Footer */}
-      <div className="flex items-center justify-between pt-3 border-t border-white/5">
-        {/* Topics */}
+      <div className="flex items-center justify-between pt-2.5 border-t border-border mt-auto">
         <div className="flex flex-wrap gap-1">
-          {showTopics.map(t => (
-            <span key={t} className="tag-pill">
+          {repo.topics.slice(0, 3).map(t => (
+            <span key={t} className="font-mono text-[8px] text-muted/50 border border-border rounded-sm px-1.5 py-0.5">
               {t}
             </span>
           ))}
         </div>
-
-        {/* Stats */}
-        <div className="flex items-center gap-3 text-slate-600 text-xs flex-shrink-0 ml-2">
-          <span className="flex items-center gap-1">
-            <Star size={11} />
-            {repo.stars}
-          </span>
-          <span className="flex items-center gap-1">
-            <GitFork size={11} />
-            {repo.forks}
-          </span>
+        <div className="flex items-center gap-2 font-mono text-[9px] text-muted/30 flex-shrink-0 ml-2">
+          <span className="flex items-center gap-0.5"><Star size={10} />{repo.stars}</span>
+          <span className="flex items-center gap-0.5"><GitFork size={10} />{repo.forks}</span>
         </div>
       </div>
     </motion.div>

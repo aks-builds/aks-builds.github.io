@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>New Sections + README</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#0a0a0a;color:#e2e8f0;font-family:'IBM Plex Sans',sans-serif;padding:32px 20px 60px;}
+h1{text-align:center;font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:600;color:#fafafa;margin-bottom:6px;}
+.sub{text-align:center;color:#3f3f46;font-size:12px;font-family:'IBM Plex Mono',monospace;margin-bottom:40px;}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#22c55e;letter-spacing:.14em;text-transform:uppercase;text-align:center;display:block;margin-bottom:10px;}
+
+/* ─── SECTIONS PANEL ─── */
+.panel{margin-bottom:48px;}
+.panel-title{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:#fafafa;margin-bottom:4px;display:flex;align-items:center;gap:8px;}
+.panel-title::before{content:'//';color:#22c55e;}
+.panel-sub{font-size:11px;color:#3f3f46;margin-bottom:20px;font-family:'IBM Plex Mono',monospace;}
+
+/* ─── TALKS MOCKUP ─── */
+.talks-section{background:#0a0a0a;border:1px solid #161616;border-radius:10px;padding:28px;margin-bottom:20px;}
+.talks-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#22c55e;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px;}
+.talks-title{font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:600;color:#fafafa;letter-spacing:-.01em;margin-bottom:6px;}
+.talks-title::after{content:'';display:block;width:0;height:2px;background:linear-gradient(90deg,#22c55e,transparent);margin-top:8px;animation:expand .8s .3s ease both;}
+@keyframes expand{from{width:0}to{width:100px}}
+.talks-sub{font-size:12px;color:#52525b;margin-bottom:24px;line-height:1.6;}
+.talks-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px;}
+.talk-card{background:#0d0d0d;border:1px solid #161616;border-radius:8px;overflow:hidden;transition:all .2s;cursor:pointer;}
+.talk-card:hover{border-color:#22c55e22;transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.4);}
+.talk-thumb{
+  background:linear-gradient(135deg,#111 0%,#0d0d0d 100%);
+  height:90px;display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;border-bottom:1px solid #161616;
+}
+.talk-thumb::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 50% 50%, rgba(34,197,94,.08) 0%,transparent 70%);
+}
+.play-btn{
+  width:32px;height:32px;border-radius:50%;
+  border:1px solid rgba(34,197,94,.4);
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;color:#22c55e;position:relative;z-index:1;
+  transition:all .2s;background:rgba(34,197,94,.05);
+}
+.talk-card:hover .play-btn{background:rgba(34,197,94,.12);border-color:rgba(34,197,94,.6);}
+.talk-info{padding:10px 12px;}
+.talk-venue{font-family:'IBM Plex Mono',monospace;font-size:8px;color:#22c55e;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;}
+.talk-name{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:#fafafa;line-height:1.35;}
+.upcoming-tag{
+  display:inline-flex;align-items:center;gap:5px;
+  font-family:'IBM Plex Mono',monospace;font-size:9px;color:#f59e0b;
+  border:1px solid rgba(245,158,11,.2);border-radius:2px;
+  padding:2px 8px;margin-top:10px;letter-spacing:.05em;
+}
+.upcoming-tag::before{content:'●';font-size:7px;}
+
+/* ─── NPM SPOTLIGHT MOCKUP ─── */
+.npm-section{background:#0a0a0a;border:1px solid #161616;border-radius:10px;padding:28px;}
+.npm-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#22c55e;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px;}
+.npm-title{font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:600;color:#fafafa;letter-spacing:-.01em;margin-bottom:6px;}
+.npm-sub{font-size:12px;color:#52525b;margin-bottom:24px;line-height:1.6;}
+.npm-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.npm-card{
+  background:#0d0d0d;border:1px solid #161616;border-radius:8px;
+  padding:16px;transition:all .2s;
+  display:flex;flex-direction:column;gap:10px;
+  position:relative;overflow:hidden;
+}
+.npm-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(34,197,94,.04),transparent);
+  opacity:0;transition:opacity .2s;
+}
+.npm-card:hover{border-color:#22c55e22;transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.4);}
+.npm-card:hover::before{opacity:1;}
+.npm-pkg-name{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:#22c55e;}
+.npm-pkg-desc{font-size:11px;color:#52525b;line-height:1.5;flex:1;}
+.npm-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.npm-badge{
+  font-family:'IBM Plex Mono',monospace;font-size:8px;
+  padding:2px 8px;border-radius:2px;letter-spacing:.04em;
+}
+.npm-ver{background:rgba(203,56,55,.1);color:#fb7185;border:1px solid rgba(203,56,55,.2);}
+.npm-lang{background:rgba(49,120,198,.1);color:#60a5fa;border:1px solid rgba(49,120,198,.2);}
+.npm-cmd{
+  font-family:'IBM Plex Mono',monospace;font-size:8px;
+  background:#111;border:1px solid #1c1c1c;border-radius:3px;
+  padding:4px 8px;color:#3f3f46;
+  display:flex;align-items:center;gap:4px;
+}
+.npm-cmd::before{content:'$';color:#22c55e;}
+
+/* ─── README PANEL ─── */
+.readme-comparison{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.readme-col{border:1px solid #1c1c1c;border-radius:10px;overflow:hidden;}
+.readme-col-header{
+  background:#161616;padding:10px 14px;
+  display:flex;align-items:center;gap:8px;
+  border-bottom:1px solid #1c1c1c;
+}
+.readme-col-title{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;}
+.readme-col-tag{font-family:'IBM Plex Mono',monospace;font-size:8px;padding:1px 7px;border-radius:100px;letter-spacing:.05em;}
+.readme-body{padding:20px;background:#0d0d0d;min-height:400px;}
+
+/* CURRENT README */
+.cur-header{background:#161616;border-radius:6px;padding:12px;margin-bottom:14px;text-align:center;}
+.cur-typing{font-family:'Fira Code',monospace;font-size:11px;color:#58A6FF;margin-bottom:4px;}
+.cur-typing span{border-right:2px solid #58A6FF;animation:blink 1s step-end infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.cur-role{font-size:10px;color:#a3a3a3;font-weight:600;}
+.cur-badges{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px;justify-content:center;}
+.cur-badge{
+  font-size:8px;padding:3px 8px;border-radius:3px;
+  font-family:'Fira Code',monospace;
+}
+.cur-section{font-family:'Fira Code',monospace;font-size:8px;color:#58A6FF;background:#0d1117;padding:4px 8px;border-radius:3px;margin-bottom:8px;display:inline-block;}
+.cur-table{width:100%;border-collapse:collapse;margin-bottom:12px;}
+.cur-table td{border:1px solid #21262d;padding:8px;font-size:9px;color:#a3a3a3;vertical-align:top;}
+.cur-table td h5{color:#58A6FF;font-size:9px;margin-bottom:3px;}
+.cur-stats-row{display:flex;gap:6px;margin-top:8px;}
+.cur-stat-card{flex:1;background:#0d1117;border:1px solid #21262d;border-radius:4px;padding:8px;text-align:center;}
+.cur-stat-val{font-family:'Fira Code',monospace;font-size:14px;color:#58A6FF;font-weight:600;display:block;}
+.cur-stat-lbl{font-size:8px;color:#555;display:block;}
+
+/* NEW README */
+.new-header{background:#0d0d0d;border:1px solid #1c1c1c;border-radius:6px;overflow:hidden;margin-bottom:14px;}
+.new-winbar{background:#161616;padding:6px 10px;display:flex;align-items:center;gap:5px;border-bottom:1px solid #1c1c1c;}
+.new-dot{width:8px;height:8px;border-radius:50%;}
+.new-winbar-title{font-family:'IBM Plex Mono',monospace;font-size:8px;color:#3f3f46;flex:1;text-align:center;letter-spacing:.04em;}
+.new-win-body{padding:12px 14px;}
+.new-prompt{font-family:'IBM Plex Mono',monospace;font-size:8px;color:#3f3f46;margin-bottom:4px;}
+.new-prompt span{color:#22c55e;}
+.new-name{font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:600;color:#fafafa;margin-bottom:4px;}
+.new-name-accent{color:#22c55e;}
+.new-role{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#3f3f46;letter-spacing:.06em;margin-bottom:10px;}
+.new-role::before{content:'// ';}
+.new-available{display:inline-flex;align-items:center;gap:5px;font-family:'IBM Plex Mono',monospace;font-size:8px;color:#22c55e;border:1px solid rgba(34,197,94,.2);border-radius:2px;padding:2px 8px;margin-bottom:10px;}
+.new-available-dot{width:5px;height:5px;border-radius:50%;background:#22c55e;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,.3)}50%{box-shadow:0 0 0 4px transparent}}
+.new-badges{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px;}
+.new-badge{
+  font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.04em;
+  padding:2px 7px;border-radius:2px;
+}
+.new-section-hdr{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#22c55e;letter-spacing:.1em;text-transform:uppercase;margin:12px 0 8px;display:flex;align-items:center;gap:6px;}
+.new-section-hdr::after{content:'';flex:1;height:1px;background:#161616;}
+.new-proj-row{display:flex;gap:6px;margin-bottom:8px;}
+.new-proj-mini{flex:1;background:#111;border:1px solid #1c1c1c;border-radius:4px;padding:7px 8px;}
+.new-proj-name{font-family:'IBM Plex Mono',monospace;font-size:8px;font-weight:600;color:#fafafa;margin-bottom:2px;}
+.new-proj-desc{font-size:8px;color:#52525b;line-height:1.4;}
+.new-proj-tag{font-family:'IBM Plex Mono',monospace;font-size:7px;color:#22c55e;margin-top:4px;}
+.new-stats-row{display:flex;gap:6px;}
+.new-stat-card{flex:1;background:#111;border:1px solid #1c1c1c;border-radius:4px;padding:8px;text-align:center;}
+.new-stat-val{font-family:'IBM Plex Mono',monospace;font-size:14px;color:#22c55e;font-weight:600;display:block;text-shadow:0 0 10px rgba(34,197,94,.3);}
+.new-stat-lbl{font-family:'IBM Plex Mono',monospace;font-size:7px;color:#3f3f46;display:block;letter-spacing:.04em;}
+
+.note{text-align:center;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#3f3f46;margin-top:28px;letter-spacing:.03em;}
+
+.tag-new{background:rgba(34,197,94,.1);color:#22c55e;border:1px solid rgba(34,197,94,.2);}
+.tag-current{background:#1c1c1c;color:#52525b;}
+</style>
+</head>
+<body>
+
+<span class="eyebrow">> portfolio — gaps & readme</span>
+<h1>What's missing + README concept</h1>
+<p class="sub">// Two new sections discovered · one README redesign proposed</p>
+
+<!-- ═══ NEW SECTIONS ═══ -->
+<div class="panel">
+  <div class="panel-title">New sections to add</div>
+  <div class="panel-sub">Found in your README but absent from the portfolio — both are credibility signals.</div>
+
+  <!-- TALKS -->
+  <div class="talks-section">
+    <div class="talks-eyebrow">// talks &amp; speaking</div>
+    <div class="talks-title">On the Mic</div>
+    <div class="talks-sub">You have 3 published NashKnolX talks on YouTube + an upcoming NashLearn session. This is a top-tier credibility signal that's completely missing from the portfolio.</div>
+    <div class="talks-grid">
+      <div class="talk-card">
+        <div class="talk-thumb">
+          <div class="play-btn">▶</div>
+        </div>
+        <div class="talk-info">
+          <div class="talk-venue">NashKnolX</div>
+          <div class="talk-name">Smart Test Data — Faker vs AI</div>
+        </div>
+      </div>
+      <div class="talk-card">
+        <div class="talk-thumb">
+          <div class="play-btn">▶</div>
+        </div>
+        <div class="talk-info">
+          <div class="talk-venue">NashKnolX</div>
+          <div class="talk-name">Testing Event-Driven Architecture</div>
+        </div>
+      </div>
+      <div class="talk-card">
+        <div class="talk-thumb">
+          <div class="play-btn">▶</div>
+        </div>
+        <div class="talk-info">
+          <div class="talk-venue">NashKnolX</div>
+          <div class="talk-name">Clean Code in Test Automation</div>
+        </div>
+      </div>
+    </div>
+    <div class="upcoming-tag">upcoming · Jun 19, 2026 · AI-Assisted Test Failure Analysis · NashLearn</div>
+  </div>
+
+  <!-- NPM -->
+  <div class="npm-section">
+    <div class="npm-eyebrow">// published packages</div>
+    <div class="npm-title">On npm</div>
+    <div class="npm-sub">Three production packages with install commands. Proves the work ships — not just a GitHub repo but something people <code style="font-family:'IBM Plex Mono',monospace;color:#22c55e;font-size:11px;">npm install</code> in real projects.</div>
+    <div class="npm-grid">
+      <div class="npm-card">
+        <div class="npm-pkg-name">cliproof</div>
+        <div class="npm-pkg-desc">Terminal screenshot proof tool — shows your CLI works in READMEs.</div>
+        <div class="npm-meta">
+          <span class="npm-badge npm-ver">v latest</span>
+          <span class="npm-badge npm-lang">Python</span>
+        </div>
+        <div class="npm-cmd">npm install cliproof</div>
+      </div>
+      <div class="npm-card">
+        <div class="npm-pkg-name">ai-test-failure-analyzer</div>
+        <div class="npm-pkg-desc">AI-powered test failure tracer — Playwright, Jest, Cypress, k6.</div>
+        <div class="npm-meta">
+          <span class="npm-badge npm-ver">v latest</span>
+          <span class="npm-badge npm-lang">Python + MCP</span>
+        </div>
+        <div class="npm-cmd">npm install ai-test-failure-analyzer</div>
+      </div>
+      <div class="npm-card">
+        <div class="npm-pkg-name">openspecpm</div>
+        <div class="npm-pkg-desc">BDD-shaped project management for AI agents — GitHub, Jira, Linear.</div>
+        <div class="npm-meta">
+          <span class="npm-badge npm-ver">v latest</span>
+          <span class="npm-badge npm-lang">JavaScript</span>
+        </div>
+        <div class="npm-cmd">npm install openspecpm</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ README PANEL ═══ -->
+<div class="panel">
+  <div class="panel-title">GitHub Profile README — before vs after</div>
+  <div class="panel-sub">Same content, same sections. Only the color palette and typography change — Carbon aesthetic applied via custom SVG header + rethemed badges/stats cards.</div>
+
+  <div class="readme-comparison">
+
+    <!-- CURRENT -->
+    <div class="readme-col">
+      <div class="readme-col-header">
+        <div class="readme-col-title" style="color:#58A6FF;">Current README</div>
+        <span class="readme-col-tag" style="background:#0d1117;color:#555;border:1px solid #21262d;">blue · Fira Code</span>
+      </div>
+      <div class="readme-body">
+        <div class="cur-header">
+          <div class="cur-typing">Hey, I'm Aditya Kumar Singh 👋<span></span></div>
+          <div class="cur-role">Cloud Native Quality Engineer</div>
+        </div>
+        <div class="cur-badges">
+          <span class="cur-badge" style="background:#1a1a2e;color:#F37021;border:1px solid #F3702144;">Working at NashTech</span>
+          <span class="cur-badge" style="background:#0A66C2;color:white;">LinkedIn</span>
+        </div>
+        <span class="cur-section">▎ What I'm shipping</span>
+        <table class="cur-table">
+          <tr>
+            <td><h5>🛡️ cliproof</h5>Prove your CLI actually works...</td>
+            <td><h5>🔫 Hitro</h5>Local-first desktop API client...</td>
+          </tr>
+        </table>
+        <span class="cur-section">▎ GitHub Stats</span>
+        <div class="cur-stats-row">
+          <div class="cur-stat-card"><span class="cur-stat-val">16</span><span class="cur-stat-lbl">repos</span></div>
+          <div class="cur-stat-card"><span class="cur-stat-val" style="font-size:10px;margin-top:3px;">↑↑↑</span><span class="cur-stat-lbl">activity graph</span></div>
+          <div class="cur-stat-card"><span class="cur-stat-val">🐍</span><span class="cur-stat-lbl">snake</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEW -->
+    <div class="readme-col" style="border-color:#22c55e22;">
+      <div class="readme-col-header" style="background:#0d0d0d;">
+        <div class="readme-col-title" style="color:#22c55e;">Carbon README</div>
+        <span class="readme-col-tag tag-new">green · IBM Plex Mono · SVG terminal</span>
+      </div>
+      <div class="readme-body">
+        <!-- Terminal window header -->
+        <div class="new-header">
+          <div class="new-winbar">
+            <div class="new-dot" style="background:#ef4444"></div>
+            <div class="new-dot" style="background:#f59e0b"></div>
+            <div class="new-dot" style="background:#22c55e"></div>
+            <span class="new-winbar-title">aditya@github — zsh</span>
+          </div>
+          <div class="new-win-body">
+            <div class="new-prompt"><span>~</span>  whoami</div>
+            <div class="new-name">Aditya <span class="new-name-accent">S.</span></div>
+            <div class="new-role">Cloud Native Quality Engineer</div>
+            <div class="new-available"><div class="new-available-dot"></div>available for new opportunities</div>
+          </div>
+        </div>
+        <!-- Rethemed badges -->
+        <div class="new-badges">
+          <span class="new-badge" style="background:rgba(34,197,94,.08);color:#22c55e;border:1px solid rgba(34,197,94,.2);">NashTech</span>
+          <span class="new-badge" style="background:rgba(49,120,198,.1);color:#60a5fa;border:1px solid rgba(49,120,198,.2);">LinkedIn</span>
+          <span class="new-badge" style="background:rgba(203,56,55,.1);color:#fb7185;border:1px solid rgba(203,56,55,.2);">npm</span>
+        </div>
+        <!-- Section -->
+        <div class="new-section-hdr">projects</div>
+        <div class="new-proj-row">
+          <div class="new-proj-mini">
+            <div class="new-proj-name">cliproof</div>
+            <div class="new-proj-desc">Terminal screenshot proof</div>
+            <div class="new-proj-tag">Python · npm</div>
+          </div>
+          <div class="new-proj-mini">
+            <div class="new-proj-name">Hitro</div>
+            <div class="new-proj-desc">Desktop API client</div>
+            <div class="new-proj-tag">TypeScript · Electron</div>
+          </div>
+        </div>
+        <!-- Stats -->
+        <div class="new-section-hdr">github stats</div>
+        <div class="new-stats-row">
+          <div class="new-stat-card"><span class="new-stat-val">16</span><span class="new-stat-lbl">repos</span></div>
+          <div class="new-stat-card"><span class="new-stat-val">3</span><span class="new-stat-lbl">npm pkgs</span></div>
+          <div class="new-stat-card"><span class="new-stat-val">50+</span><span class="new-stat-lbl">skills</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p class="note">// README uses a custom SVG terminal window + rethemed shields.io badges (labelColor=0a0a0a, color=22c55e) + dark green github-readme-stats theme</p>
+
+</body>
+</html>
