@@ -1,0 +1,27 @@
+.footer {
+  padding: 28px 0 40px;
+}
+
+.name {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.role {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.links {
+  display: flex;
+  gap: 18px;
+  font-family: var(--font-mono), monospace;
+  font-size: 11.5px;
+  color: var(--muted);
+}
+
+.links a:hover {
+  color: var(--accent);
+}

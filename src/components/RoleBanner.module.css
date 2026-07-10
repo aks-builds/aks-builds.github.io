@@ -1,0 +1,127 @@
+.banner {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 22px;
+  background: var(--card);
+  margin-bottom: 20px;
+  transition: background 0.4s, border-color 0.4s;
+}
+
+.chain {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.orgBadge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  border-radius: 20px;
+  padding: 6px 13px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text);
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.orgBadge:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent);
+}
+
+.ic {
+  width: 17px;
+  height: 17px;
+  border-radius: 4px;
+  background: var(--accentsoft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ic svg {
+  width: 11px;
+  height: 11px;
+  stroke: var(--accent);
+}
+
+.via {
+  color: var(--muted);
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  font-weight: 400;
+  margin-left: 2px;
+}
+
+.chainArrow {
+  color: var(--accent);
+  font-family: var(--font-mono), monospace;
+  font-size: 14px;
+}
+
+.client {
+  border-color: var(--accent);
+}
+
+.roleMain {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.roleTitle {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.lvl {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.promoPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  padding: 3px 9px;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+.roleDur {
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.dot2 {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulseRing 2s ease-out infinite;
+}
+
+.context {
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-top: 12px;
+  max-width: 700px;
+}

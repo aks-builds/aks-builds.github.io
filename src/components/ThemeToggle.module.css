@@ -1,0 +1,36 @@
+.bulbBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.bulbSvg {
+  width: 24px;
+  height: 24px;
+}
+
+.glowOn {
+  filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.9));
+  transition: filter 0.4s;
+}
+
+.glowOff {
+  filter: none;
+  transition: filter 0.4s;
+}
+
+.swing {
+  animation: swing 0.5s ease;
+  transform-origin: top center;
+}
+
+@keyframes swing {
+  0% { transform: rotate(0); }
+  25% { transform: rotate(-9deg); }
+  55% { transform: rotate(7deg); }
+  80% { transform: rotate(-3deg); }
+  100% { transform: rotate(0); }
+}

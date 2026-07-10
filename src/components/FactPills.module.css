@@ -1,0 +1,15 @@
+.facts {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.pill {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 7px 14px;
+  color: var(--text);
+  display: inline-block;
+}

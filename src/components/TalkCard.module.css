@@ -1,0 +1,29 @@
+.talkCard {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  cursor: pointer;
+}
+
+.talkCard img {
+  width: 88px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+
+.tt {
+  font-size: 13px;
+  color: var(--text);
+  font-weight: 700;
+  line-height: 1.35;
+  margin-bottom: 4px;
+}
+
+.tc {
+  font-size: 10.5px;
+  color: var(--muted);
+  font-family: var(--font-mono), monospace;
+}

@@ -1,0 +1,39 @@
+.wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 90px;
+  height: 20px;
+}
+
+.line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1.5px;
+  background: var(--accent);
+  opacity: 0.5;
+  transform-origin: left;
+}
+
+.arrowhead {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--accent);
+  font-size: 12px;
+}
+
+.label {
+  position: relative;
+  margin: 0 auto;
+  padding: 0 8px;
+  background: var(--card);
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  color: var(--muted);
+  z-index: 1;
+}
