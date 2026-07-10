@@ -1,19 +1,21 @@
 .bulbBtn {
-  background: none;
-  border: none;
   cursor: pointer;
-  padding: 4px;
+  padding: 0;
+  margin: 0;
   display: flex;
   align-items: center;
+  line-height: 0;
+  user-select: none;
 }
 
 .bulbSvg {
   width: 24px;
   height: 24px;
+  overflow: visible;
 }
 
 .glowOn {
-  filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.9));
+  filter: drop-shadow(0 0 4px rgba(250, 204, 21, 0.85));
   transition: filter 0.4s;
 }
 

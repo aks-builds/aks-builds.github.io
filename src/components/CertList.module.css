@@ -18,6 +18,18 @@
   border-bottom: none;
 }
 
+.left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.check {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
 .cn {
   color: var(--text);
   font-weight: 600;

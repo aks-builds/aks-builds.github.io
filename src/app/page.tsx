@@ -8,11 +8,14 @@ import NpmPackageCard from "@/components/NpmPackageCard";
 import TalkCard from "@/components/TalkCard";
 import SkillTable from "@/components/SkillTable";
 import CertList from "@/components/CertList";
+import EducationList from "@/components/EducationList";
 import FactPills from "@/components/FactPills";
+import ChapterBreak from "@/components/ChapterBreak";
 import { CASE_STUDIES, IMPACT_ITEMS } from "@/lib/data/projects";
 import { getNpmPackagesWithDownloads } from "@/lib/data/npm-packages";
 import { TALKS } from "@/lib/data/talks";
 import { CERTIFICATIONS } from "@/lib/data/certifications";
+import { EDUCATION } from "@/lib/data/education";
 import { SKILL_GROUPS, FACTS } from "@/lib/data/skills";
 
 export default async function Home() {
@@ -23,6 +26,8 @@ export default async function Home() {
       <div className="container">
         <Hero />
       </div>
+
+      <ChapterBreak />
 
       <section id="work" className="section">
         <div className="container">
@@ -54,6 +59,8 @@ export default async function Home() {
         </div>
       </section>
 
+      <ChapterBreak />
+
       <section id="packages" className="section">
         <div className="container">
           <SectionHeading
@@ -72,6 +79,8 @@ export default async function Home() {
         </div>
       </section>
 
+      <ChapterBreak />
+
       <section id="talks" className="section">
         <div className="container">
           <SectionHeading
@@ -80,7 +89,7 @@ export default async function Home() {
             grayWord="talks"
             sub="NashKnolx sessions at NashTech — internal talks, published on NashTech Learning Hub's channel."
           />
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 14, marginTop: 20 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 14, marginTop: 20 }}>
             {TALKS.map((talk, i) => (
               <Reveal key={talk.youtubeId} direction={i % 2 === 0 ? "left" : "right"} delay={i * 0.05}>
                 <TalkCard talk={talk} />
@@ -90,14 +99,45 @@ export default async function Home() {
         </div>
       </section>
 
+      <ChapterBreak />
+
       <section id="about" className="section">
         <div className="container">
           <SectionHeading label="#certifications" boldWord="Certifications" />
           <div style={{ marginTop: 16 }}>
             <CertList certs={CERTIFICATIONS} />
           </div>
+
+          <div className="catLabel">#education</div>
+          <EducationList items={EDUCATION} />
         </div>
       </section>
+
+      <ChapterBreak />
+
+      <section className="section">
+        <div className="container">
+          <SectionHeading
+            label="#writing"
+            boldWord="Published"
+            grayWord="writing"
+            sub="Articles on quality engineering, test automation, and cloud-native testing practices."
+          />
+          <div style={{ marginTop: 16 }}>
+            <a
+              href="https://www.linkedin.com/in/its-aks/recent-activity/articles/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mono"
+              style={{ fontSize: 13, color: "var(--accent)", textDecoration: "underline" }}
+            >
+              Browse articles on LinkedIn ↗
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <ChapterBreak />
 
       <section className="section">
         <div className="container">
@@ -107,6 +147,8 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      <ChapterBreak />
 
       <section className="section" style={{ borderBottom: "none" }}>
         <div className="container">

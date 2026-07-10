@@ -16,7 +16,8 @@ export const SKILL_GROUPS: SkillGroup[] = [
 
 export const FACTS: string[] = [
   "ISTQB CT-FL certified",
-  "3 internal tech talks at NashTech",
+  "4 internal tech talks at NashTech",
   "8 npm packages published",
+  "Recognized on internal platforms multiple times (2023–2025), including client-side commendations",
   "Based in Greater Noida, open to relocation",
 ];

@@ -12,6 +12,7 @@
   font-weight: 700;
   color: var(--text);
   font-size: 14px;
+  flex-shrink: 0;
 }
 
 .links {
@@ -41,6 +42,15 @@
   width: 100%;
 }
 
+.activeLink {
+  color: var(--accent);
+}
+
+.activeLink::after {
+  width: 100% !important;
+  background: var(--accent);
+}
+
 .rightGroup {
   display: flex;
   align-items: center;
@@ -57,4 +67,60 @@
   background: var(--pillbg);
   border-radius: 16px;
   padding: 7px 14px;
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 28px;
+  height: 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.hamburger span {
+  display: block;
+  width: 100%;
+  height: 1.5px;
+  background: var(--text);
+  transition: transform 0.25s, opacity 0.25s;
+}
+
+.barTop {
+  transform: translateY(6.5px) rotate(45deg);
+}
+
+.barMid {
+  opacity: 0;
+}
+
+.barBot {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+.mobilePanel {
+  display: none;
+  flex-direction: column;
+  gap: 16px;
+  overflow: hidden;
+  padding: 0 24px 20px;
+  font-family: var(--font-mono), monospace;
+  font-size: 14px;
+  color: var(--text);
+}
+
+@media (max-width: 720px) {
+  .links {
+    display: none;
+  }
+  .hamburger {
+    display: flex;
+  }
+  .mobilePanel {
+    display: flex;
+  }
 }

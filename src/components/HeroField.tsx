@@ -4,7 +4,15 @@ import { useRef, useMemo, type MutableRefObject } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
-function Particles({ scrollRef }: { scrollRef: MutableRefObject<number> }) {
+type MousePos = { x: number; y: number };
+
+function Particles({
+  scrollRef,
+  mouseRef,
+}: {
+  scrollRef: MutableRefObject<number>;
+  mouseRef: MutableRefObject<MousePos>;
+}) {
   const ref = useRef<THREE.Points>(null);
   const materialRef = useRef<THREE.PointsMaterial>(null);
   const count = 260;
@@ -21,9 +29,10 @@ function Particles({ scrollRef }: { scrollRef: MutableRefObject<number> }) {
 
   useFrame((state) => {
     const progress = scrollRef.current;
+    const mouse = mouseRef.current;
     if (ref.current) {
-      ref.current.rotation.y = state.clock.elapsedTime * 0.02;
-      ref.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.05) * 0.1;
+      ref.current.rotation.y = state.clock.elapsedTime * 0.02 + mouse.x * 0.15;
+      ref.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.05) * 0.1 - mouse.y * 0.1;
       const targetScale = 1 + progress * 2.2;
       ref.current.scale.x += (targetScale - ref.current.scale.x) * 0.08;
       ref.current.scale.y += (targetScale - ref.current.scale.y) * 0.08;
@@ -45,14 +54,20 @@ function Particles({ scrollRef }: { scrollRef: MutableRefObject<number> }) {
   );
 }
 
-export default function HeroField({ scrollRef }: { scrollRef: MutableRefObject<number> }) {
+export default function HeroField({
+  scrollRef,
+  mouseRef,
+}: {
+  scrollRef: MutableRefObject<number>;
+  mouseRef: MutableRefObject<MousePos>;
+}) {
   return (
     <Canvas
       camera={{ position: [0, 0, 5], fov: 50 }}
       gl={{ alpha: true, antialias: true }}
       style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
     >
-      <Particles scrollRef={scrollRef} />
+      <Particles scrollRef={scrollRef} mouseRef={mouseRef} />
     </Canvas>
   );
 }

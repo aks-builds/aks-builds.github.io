@@ -7,6 +7,12 @@ export interface Talk {
 
 export const TALKS: Talk[] = [
   {
+    title: "AI Assisted Test Failure Analysis",
+    youtubeId: "3NxoCRXgCFk",
+    channel: "NashTech Learning Hub",
+    url: "https://youtu.be/3NxoCRXgCFk",
+  },
+  {
     title: "Smart Test Data: Faker vs AI",
     youtubeId: "0H5A6l1fAHI",
     channel: "NashTech Learning Hub",

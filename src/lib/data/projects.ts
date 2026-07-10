@@ -8,6 +8,7 @@ export interface CaseStudy {
   architecture: string;
   decisions: string[];
   impact: string;
+  impactStat?: { value: number; suffix: string; label: string };
   liveUrl?: string;
   githubUrl: string;
 }
@@ -30,6 +31,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     impact:
       "Benchmarked ~30% lower token cost in testing with no observed accuracy loss, and ~68% TTFT reduction from the PPD turn-classifier + provider router in InferRoute. These are project-level benchmarks, not numbers from a production deployment.",
+    impactStat: { value: 30, suffix: "%", label: "lower token cost (benchmarked)" },
     githubUrl: "https://github.com/aks-builds/agentsave",
   },
   {
@@ -49,6 +51,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     impact:
       "Published to npm and installable today; real (non-zero) monthly download activity on the registry.",
+    impactStat: { value: 24, suffix: "", label: "test frameworks supported" },
     liveUrl: "https://www.npmjs.com/package/ai-test-failure-analyzer",
     githubUrl: "https://github.com/aks-builds/ai-test-failure-analyzer",
   },
@@ -68,6 +71,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     impact:
       "The largest of my open-source projects by scope; not yet independently adopted at scale, but the biggest single test of whether domain knowledge packages cleanly for agent consumption.",
+    impactStat: { value: 107, suffix: "", label: "skills across 5 agent hosts" },
     githubUrl: "https://github.com/aks-builds/quality-skills",
   },
   {
@@ -86,6 +90,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     impact:
       "The only project in this set with independent GitHub stars — small, but real external interest rather than only self-reported metrics.",
+    impactStat: { value: 5, suffix: "", label: "PM platforms synced" },
     liveUrl: "https://www.npmjs.com/package/openspecpm",
     githubUrl: "https://github.com/aks-builds/openspecpm",
   },
@@ -105,6 +110,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     impact:
       "My most recent project and the most consumer-facing — a deliberate step outside pure QA/infra tooling into applied, privacy-conscious AI.",
+    impactStat: { value: 0, suffix: "", label: "cloud calls — fully local-first" },
     githubUrl: "https://github.com/aks-builds/clausa",
   },
 ];

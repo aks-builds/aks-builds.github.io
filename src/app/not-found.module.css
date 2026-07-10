@@ -1,0 +1,48 @@
+.wrap {
+  padding: 60px 0;
+  max-width: 480px;
+}
+
+.title {
+  font-size: 40px;
+  font-weight: 800;
+  color: var(--text);
+  margin: 8px 0 12px;
+}
+
+.title .g {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.sub {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.homeLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--pillbg);
+  color: var(--pillfg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: transform 0.3s;
+}
+
+.homeLink:hover .circle {
+  transform: rotate(45deg) scale(1.08);
+}

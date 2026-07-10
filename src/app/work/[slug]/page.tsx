@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Reveal from "@/components/Reveal";
+import CountUp from "@/components/CountUp";
 import { CASE_STUDIES } from "@/lib/data/projects";
 import styles from "./case-study.module.css";
 
@@ -11,7 +12,11 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const project = CASE_STUDIES.find((p) => p.slug === slug);
-  return { title: project ? `${project.name} — Aditya Kumar Singh` : "Case study" };
+  if (!project) return { title: "Case study" };
+  return {
+    title: `${project.name} — Aditya Kumar Singh`,
+    description: project.oneLiner,
+  };
 }
 
 export default async function CaseStudyPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -73,6 +78,15 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
           <Reveal direction="left" delay={0.15}>
             <section className={styles.block}>
               <h2>Impact</h2>
+              {project.impactStat && (
+                <div className={styles.statCallout}>
+                  <div className={styles.statNum}>
+                    <CountUp target={project.impactStat.value} />
+                    {project.impactStat.suffix}
+                  </div>
+                  <div className={styles.statLabel}>{project.impactStat.label}</div>
+                </div>
+              )}
               <p>{project.impact}</p>
             </section>
           </Reveal>
