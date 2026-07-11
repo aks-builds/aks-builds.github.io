@@ -2,6 +2,7 @@
 
 import { useRef, type ReactNode } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
+import { useIsTouchDevice } from "@/lib/useIsTouchDevice";
 
 export default function MagneticButton({
   children,
@@ -12,6 +13,7 @@ export default function MagneticButton({
   className?: string;
   strength?: number;
 }) {
+  const isTouch = useIsTouchDevice();
   const ref = useRef<HTMLSpanElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -19,6 +21,7 @@ export default function MagneticButton({
   const springY = useSpring(y, { stiffness: 200, damping: 15 });
 
   const handleMove = (e: React.MouseEvent<HTMLSpanElement>) => {
+    if (isTouch) return;
     const el = ref.current;
     if (!el) return;
     const r = el.getBoundingClientRect();
@@ -38,6 +41,7 @@ export default function MagneticButton({
       ref={ref}
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
+      whileTap={{ scale: 0.92 }}
       style={{ x: springX, y: springY, display: "inline-block" }}
       className={className}
     >
