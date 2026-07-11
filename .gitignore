@@ -4,3 +4,4 @@ out
 .next
 .DS_Store
 *.local
+playwright-mobile-checks
