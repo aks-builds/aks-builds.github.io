@@ -1,14 +1,17 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useIsTouchDevice } from "@/lib/useIsTouchDevice";
+import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 import styles from "./CursorGlow.module.css";
 
 export default function CursorGlow() {
   const ref = useRef<HTMLDivElement>(null);
+  const isTouch = useIsTouchDevice();
+  const reducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    if (window.matchMedia("(pointer: coarse)").matches) return;
+    if (reducedMotion || isTouch) return;
 
     function onMove(e: MouseEvent) {
       ref.current?.style.setProperty("--gx", `${e.clientX}px`);
@@ -16,7 +19,9 @@ export default function CursorGlow() {
     }
     window.addEventListener("mousemove", onMove, { passive: true });
     return () => window.removeEventListener("mousemove", onMove);
-  }, []);
+  }, [reducedMotion, isTouch]);
 
-  return <div ref={ref} className={styles.glow} />;
+  if (reducedMotion) return null;
+
+  return <div ref={ref} className={`${styles.glow} ${isTouch ? styles.ambient : ""}`} />;
 }
