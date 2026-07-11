@@ -119,8 +119,38 @@
   }
   .hamburger {
     display: flex;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+  }
+  .hamburger span {
+    width: 24px;
   }
   .mobilePanel {
     display: flex;
+  }
+  .mobilePanel a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    font-size: 13px;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .rightGroup {
+    gap: 8px;
+  }
+
+  .resumeBtn {
+    padding: 7px 10px;
+    font-size: 10.5px;
   }
 }
