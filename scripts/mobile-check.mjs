@@ -50,7 +50,14 @@ for (const name of profiles) {
         await sleep(120);
       }
       window.scrollTo(0, 0);
-      await sleep(400);
+      // Final settle wait: Reveal.tsx uses `transition={{ duration: 0.7, delay }}`,
+      // and several call sites stack a per-index delay on top (e.g. CertList.tsx
+      // and the npm packages/talks sections in src/app/page.tsx use
+      // `delay={i * 0.04}`/`delay={i * 0.05}`, and src/app/work/[slug]/page.tsx
+      // goes up to `delay={0.15}`). For the last item in a longer list,
+      // delay + duration can approach ~0.9-1.0s, so wait comfortably past that
+      // with margin before the screenshot.
+      await sleep(1400);
     });
 
     const fileSafeName = name.replace(/\s+/g, "-").toLowerCase();
