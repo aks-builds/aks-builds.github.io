@@ -36,6 +36,23 @@ for (const name of profiles) {
   const page = await context.newPage();
   for (const path of pages) {
     await page.goto(`${BASE_URL}${path}`, { waitUntil: "networkidle" });
+
+    // Scroll through the whole page first so Framer Motion's `whileInView`
+    // reveal animations (see src/components/Reveal.tsx) have a chance to
+    // fire for every below-the-fold section, then return to the top before
+    // capturing — otherwise fullPage screenshots can show blank gaps for
+    // sections that never entered the viewport.
+    await page.evaluate(async () => {
+      const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+      const step = window.innerHeight;
+      for (let y = 0; y < document.body.scrollHeight; y += step) {
+        window.scrollTo(0, y);
+        await sleep(120);
+      }
+      window.scrollTo(0, 0);
+      await sleep(400);
+    });
+
     const fileSafeName = name.replace(/\s+/g, "-").toLowerCase();
     const fileSafePath = path === "/" ? "home" : path.replace(/\//g, "-").slice(1);
     await page.screenshot({
