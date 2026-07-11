@@ -65,20 +65,7 @@
   display: grid;
   grid-template-columns: 1fr 220px;
   gap: 40px;
-}
-
-/* Reveal.tsx sets an unconditional `height: 100%` on its wrapper div, which
-   is meant for equal-height cards in a shared grid row (e.g. the home page's
-   project/package grids). Here `.main` is itself a grid item, and its
-   default `align-items: stretch` gives `.main` a definite (non-auto)
-   height, which means each Reveal-wrapped section that is a *direct child*
-   of `.main` independently resolves its own `height: 100%` against that
-   whole-column height instead of its own content height — inflating every
-   section to the height of all of them combined and pushing the page
-   Footer up into the overflowing content. Force these Reveal wrappers back
-   to their natural content height. */
-.main > * {
-  height: auto !important;
+  align-items: start;
 }
 
 @media (max-width: 800px) {
