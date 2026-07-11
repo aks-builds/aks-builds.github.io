@@ -13,3 +13,10 @@
   color: var(--text);
   display: inline-block;
 }
+
+@media (max-width: 480px) {
+  .pill {
+    padding: 6px 11px;
+    font-size: 10.5px;
+  }
+}

@@ -14,6 +14,18 @@
   flex-wrap: wrap;
 }
 
+@media (max-width: 480px) {
+  .item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .ci {
+    white-space: normal;
+  }
+}
+
 .item:last-child {
   border-bottom: none;
 }
