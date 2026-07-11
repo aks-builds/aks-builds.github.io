@@ -11,6 +11,7 @@ import CertList from "@/components/CertList";
 import EducationList from "@/components/EducationList";
 import FactPills from "@/components/FactPills";
 import ChapterBreak from "@/components/ChapterBreak";
+import CardCarousel from "@/components/CardCarousel";
 import { CASE_STUDIES, IMPACT_ITEMS } from "@/lib/data/projects";
 import { getNpmPackagesWithDownloads } from "@/lib/data/npm-packages";
 import { TALKS } from "@/lib/data/talks";
@@ -40,22 +41,22 @@ export default async function Home() {
 
           <div className="catLabel">#production-impact</div>
           <RoleBanner />
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 14 }}>
+          <CardCarousel columns={2}>
             {IMPACT_ITEMS.map((item, i) => (
               <Reveal key={item.key} direction={i % 2 === 0 ? "left" : "right"} delay={i * 0.06}>
                 <ImpactCard item={item} />
               </Reveal>
             ))}
-          </div>
+          </CardCarousel>
 
           <div className="catLabel">#open-source · personal projects</div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 14 }}>
+          <CardCarousel columns={3}>
             {CASE_STUDIES.map((project, i) => (
               <Reveal key={project.slug} direction="bottom" delay={i * 0.06}>
                 <ProjectCard project={project} tilt={i === 0} />
               </Reveal>
             ))}
-          </div>
+          </CardCarousel>
         </div>
       </section>
 
@@ -69,12 +70,14 @@ export default async function Home() {
             grayWord="npm"
             sub="8 packages under aks-builds, real monthly download counts pulled live from the npm registry at build time."
           />
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12, marginTop: 20 }}>
-            {packages.map((pkg, i) => (
-              <Reveal key={pkg.name} direction="bottom" delay={i * 0.04}>
-                <NpmPackageCard pkg={pkg} />
-              </Reveal>
-            ))}
+          <div style={{ marginTop: 20 }}>
+            <CardCarousel columns={4}>
+              {packages.map((pkg, i) => (
+                <Reveal key={pkg.name} direction="bottom" delay={i * 0.04}>
+                  <NpmPackageCard pkg={pkg} />
+                </Reveal>
+              ))}
+            </CardCarousel>
           </div>
         </div>
       </section>
@@ -89,12 +92,14 @@ export default async function Home() {
             grayWord="talks"
             sub="NashKnolx sessions at NashTech — internal talks, published on NashTech Learning Hub's channel."
           />
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 14, marginTop: 20 }}>
-            {TALKS.map((talk, i) => (
-              <Reveal key={talk.youtubeId} direction={i % 2 === 0 ? "left" : "right"} delay={i * 0.05}>
-                <TalkCard talk={talk} />
-              </Reveal>
-            ))}
+          <div style={{ marginTop: 20 }}>
+            <CardCarousel columns={2}>
+              {TALKS.map((talk, i) => (
+                <Reveal key={talk.youtubeId} direction={i % 2 === 0 ? "left" : "right"} delay={i * 0.05}>
+                  <TalkCard talk={talk} />
+                </Reveal>
+              ))}
+            </CardCarousel>
           </div>
         </div>
       </section>
