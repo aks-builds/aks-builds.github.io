@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
+import { useIsTouchDevice } from "@/lib/useIsTouchDevice";
 
 const HeroField = dynamic(() => import("./HeroField"), { ssr: false });
 
@@ -9,6 +10,7 @@ export default function HeroCanvas() {
   const [enabled, setEnabled] = useState(false);
   const scrollRef = useRef(0);
   const mouseRef = useRef({ x: 0, y: 0 });
+  const isTouch = useIsTouchDevice();
 
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -37,7 +39,7 @@ export default function HeroCanvas() {
 
   return (
     <div style={{ position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none" }}>
-      <HeroField scrollRef={scrollRef} mouseRef={mouseRef} />
+      <HeroField scrollRef={scrollRef} mouseRef={mouseRef} isTouch={isTouch} />
     </div>
   );
 }
