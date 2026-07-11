@@ -23,8 +23,18 @@
   }
 }
 
+@media (max-width: 480px) {
+  .hero {
+    padding: 36px 0;
+  }
+
+  .right p {
+    max-width: 100%;
+  }
+}
+
 .h1 {
-  font-size: 40px;
+  font-size: clamp(28px, 9vw, 40px);
   margin: 12px 0 0;
   line-height: 1.1;
   font-weight: 800;

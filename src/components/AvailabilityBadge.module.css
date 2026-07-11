@@ -22,3 +22,10 @@
   object-fit: cover;
   display: block;
 }
+
+@media (max-width: 480px) {
+  .badgeWrap {
+    width: 130px;
+    height: 130px;
+  }
+}
