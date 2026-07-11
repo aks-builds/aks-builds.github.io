@@ -1,8 +1,10 @@
 "use client";
 
 import { useRef, type ReactNode } from "react";
+import { useIsTouchDevice } from "@/lib/useIsTouchDevice";
 
 export default function TiltWrapper({ children }: { children: ReactNode }) {
+  const isTouch = useIsTouchDevice();
   const ref = useRef<HTMLDivElement>(null);
 
   const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -18,6 +20,10 @@ export default function TiltWrapper({ children }: { children: ReactNode }) {
     const el = ref.current;
     if (el) el.style.transform = "perspective(600px) rotateY(0) rotateX(0)";
   };
+
+  if (isTouch) {
+    return <div style={{ height: "100%" }}>{children}</div>;
+  }
 
   return (
     <div
