@@ -37,3 +37,28 @@
   color: var(--muted);
   z-index: 1;
 }
+
+@media (max-width: 768px) {
+  .wrap {
+    flex-direction: column;
+    height: auto;
+    min-width: 0;
+    width: 100%;
+    padding: 6px 0;
+  }
+
+  .line {
+    position: static;
+    width: 1.5px;
+    height: 16px;
+  }
+
+  .arrowhead {
+    position: static;
+    transform: rotate(90deg);
+  }
+
+  .label {
+    margin: 4px 0 0;
+  }
+}
