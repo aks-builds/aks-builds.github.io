@@ -113,6 +113,109 @@ export const CASE_STUDIES: CaseStudy[] = [
     impactStat: { value: 0, suffix: "", label: "cloud calls — fully local-first" },
     githubUrl: "https://github.com/aks-builds/clausa",
   },
+  {
+    slug: "flag-drift-audit",
+    name: "Flag Drift Audit",
+    oneLiner: "Diffs feature-flag exports across environments to catch missing flags, value drift, and staleness.",
+    tags: ["Feature Flags", "DevOps", "CLI", "Release Engineering"],
+    stack: ["Node.js (ESM)", "GitHub Actions", "node --test"],
+    problem:
+      "Feature-flag exports drift silently across environments — a flag added in staging gets forgotten in production, a rollout percentage changes in one env but not another, or a flag outlives its purpose and nobody removes it.",
+    architecture:
+      "A CLI that diffs two or more JSON flag exports (files or directories of them) for missing flags, value/rollout drift, and staleness — flags marked unused or older than a configurable threshold. Outputs to console, JSON, or Markdown, and ships as a GitHub Action for CI gating.",
+    decisions: [
+      "A dedicated exit code for drift (2) versus usage errors (1), so CI can branch on the two cases instead of treating every non-zero exit the same.",
+      "A strict mode that validates flag shape (e.g. rollout 0–100) before comparing, so malformed input fails loudly instead of producing a misleading diff.",
+      "Directory input scans only the top level — no recursion — to keep environment inference unambiguous.",
+    ],
+    impact:
+      "Published to npm with 61 passing tests, CI and CodeQL scanning, and zero runtime dependencies.",
+    impactStat: { value: 61, suffix: "", label: "passing tests, zero runtime deps" },
+    liveUrl: "https://www.npmjs.com/package/flag-drift-audit",
+    githubUrl: "https://github.com/aks-builds/flag-drift-audit",
+  },
+  {
+    slug: "model-changelog-watch",
+    name: "Model Changelog Watch",
+    oneLiner: "Snapshots and diffs LLM provider model specs to catch silent capability drift, separate from pricing.",
+    tags: ["LLM", "AI-Ops", "Monitoring", "CLI"],
+    stack: ["Node.js (ESM)", "GitHub Actions", "node --test"],
+    problem:
+      "Teams track LLM pricing changes closely but not capability changes — providers silently shrink context windows, drop modalities, or lower rate limits with no deprecation notice, and integrations break in production before anyone notices.",
+    architecture:
+      "A CLI (`mcw`) that merges local provider spec files into a dated snapshot, diffs two snapshots with a non-zero exit on breaking change, and renders a Markdown changelog across every consecutive snapshot pair — filtered by severity.",
+    decisions: [
+      "Scoped deliberately away from pricing, a well-covered problem, to focus on capability drift specifically.",
+      "Kept the diff/changelog logic fully local and deterministic, while isolating the one network-touching fetch path outside the test suite to keep CI network-free.",
+      "Config-driven field ignoring, so noisy non-semantic fields like a generation timestamp don't register as false drift.",
+    ],
+    impact:
+      "73 passing tests with CI and CodeQL scanning; kept as a GitHub-only package rather than published, since the audience is internal tooling pipelines.",
+    impactStat: { value: 73, suffix: "", label: "passing tests" },
+    githubUrl: "https://github.com/aks-builds/model-changelog-watch",
+  },
+  {
+    slug: "context-budget-alloc",
+    name: "Context Budget Alloc",
+    oneLiner: "A token budget allocator for LLM prompts — named zones, dynamic rebalancing, and a CLI for usage.",
+    tags: ["TypeScript", "LLM", "Context Window", "Prompt Engineering"],
+    stack: ["TypeScript", "tsup", "Vitest", "ESLint/Prettier", "Node.js"],
+    problem:
+      "LLM prompts are assembled from competing content types — system prompt, tool definitions, retrieved context, history, output headroom — all sharing one fixed context window, and retrieval or history commonly crowds out the rest with no visibility into which zone is at fault.",
+    architecture:
+      "A TypeScript library exposing named zones with either a target percentage share or a hard token cap, usage recording, and dynamic rebalancing that borrows from underused zones before signaling compression is needed. A companion CLI (`cba`) initializes config and reports zone status as a color-coded table or JSON.",
+    decisions: [
+      "Tokenizer-agnostic by design — ships simple default estimators but accepts any custom token counter (e.g. tiktoken) rather than bundling a hard tokenizer dependency.",
+      "A pluggable rebalance strategy instead of a hardcoded borrow/compress policy, so teams can encode their own priority order.",
+      "Two zone types — percentage-of-window for content that should scale with model context size, and a hard cap for fixed-size content like system prompts.",
+    ],
+    impact:
+      "Published to npm with a full Vitest suite passing, CI and CodeQL scanning.",
+    impactStat: { value: 2, suffix: "", label: "zone types: percent-of-window and hard cap" },
+    liveUrl: "https://www.npmjs.com/package/context-budget-alloc",
+    githubUrl: "https://github.com/aks-builds/context-budget-alloc",
+  },
+  {
+    slug: "embedding-drift-watch",
+    name: "Embedding Drift Watch",
+    oneLiner: "Detects embedding drift in RAG pipelines using canary documents and provenance-tracked baselines.",
+    tags: ["Python", "RAG", "Embeddings", "MLOps"],
+    stack: ["Python", "NumPy", "pytest", "ruff", "mypy"],
+    problem:
+      "RAG systems index a corpus once with a given embedding model, chunking, and preprocessing pipeline; when any of those change later, stored vectors silently stop matching what a fresh embedding pass would produce, degrading retrieval with no alarm until users notice bad answers.",
+    architecture:
+      "A CLI (`edw`) that embeds a small fixed canary-document set through a deterministic offline hashing vectorizer and stores baseline vectors with provenance, then re-embeds the same canaries later and compares via cosine distance and nearest-neighbor stability into a scored drift report — exiting non-zero on drift.",
+    decisions: [
+      "Entirely offline by design — a deterministic char-ngram hashing vectorizer instead of a bundled model or API key, so results are reproducible and CI-safe.",
+      "Every vector carries a provenance record (embedder version, chunk config, text hash, timestamp), so a drift report can explain why drift happened, not just that it did.",
+      "Pluggable embedding step — any function producing a NumPy vector can replace the default hashing embedder.",
+    ],
+    impact:
+      "97 passing tests with CI and CodeQL scanning; kept GitHub-only rather than published to PyPI.",
+    impactStat: { value: 97, suffix: "", label: "passing tests" },
+    githubUrl: "https://github.com/aks-builds/embedding-drift-watch",
+  },
+  {
+    slug: "vc-expiry-watch",
+    name: "VC Expiry Watch",
+    oneLiner: "Offline CLI reporting Verifiable Credential expiry, structural validity, and revocation status.",
+    tags: ["Verifiable Credentials", "DID", "Digital Identity", "CLI"],
+    stack: ["Node.js (CommonJS)", "GitHub Actions", "node --test"],
+    problem:
+      "Verifiable Credentials rarely have a live monitoring pipeline after issuance — wallets and verifiers accumulate JSON-LD and JWT-VC credentials whose expiration date quietly passes, or whose issuer revokes them via a status list nobody polls.",
+    architecture:
+      "A CLI that recursively scans a directory or file for credentials and checks each one for expiry status against a configurable warning window, structural validity of required VC fields, and revocation against a local fixture — supporting both a simple revocation list and the StatusList2021 bitstring format, auto-detected. Handles both JSON-LD and JWT-VC files, with table, JSON, or CSV output.",
+    decisions: [
+      "Deliberately offline-first — revocation checks always read a local fixture rather than a live network call, with the one optional live-fetch helper explicitly excluded from tests.",
+      "A fixed status priority (revoked > invalid > expired > upcoming > no-expiry > valid) so a credential with multiple issues gets one deterministic status instead of an ambiguous list.",
+      "No cryptographic signature verification — explicitly scoped to structure, expiry, and revocation, meant to pair with a real VC verification library rather than replace one.",
+    ],
+    impact:
+      "Published to npm with 68 passing tests, CI and CodeQL scanning, and zero runtime dependencies.",
+    impactStat: { value: 68, suffix: "", label: "passing tests, zero runtime deps" },
+    liveUrl: "https://www.npmjs.com/package/vc-expiry-watch",
+    githubUrl: "https://github.com/aks-builds/vc-expiry-watch",
+  },
 ];
 
 export interface ImpactItem {

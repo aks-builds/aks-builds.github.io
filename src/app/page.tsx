@@ -68,7 +68,7 @@ export default async function Home() {
             label="#packages"
             boldWord="Published on"
             grayWord="npm"
-            sub="8 packages under aks-builds, real monthly download counts pulled live from the npm registry at build time."
+            sub={`${packages.length} packages under aks-builds, real monthly download counts pulled live from the npm registry at build time.`}
           />
           <div style={{ marginTop: 20 }}>
             <CardCarousel columns={4}>

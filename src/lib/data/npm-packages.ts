@@ -54,6 +54,24 @@ export const NPM_PACKAGES: NpmPackageMeta[] = [
     npmUrl: "https://www.npmjs.com/package/openspecpm",
     githubUrl: "https://github.com/aks-builds/openspecpm",
   },
+  {
+    name: "flag-drift-audit",
+    description: "Diffs feature-flag exports across environments to catch missing flags and value drift.",
+    npmUrl: "https://www.npmjs.com/package/flag-drift-audit",
+    githubUrl: "https://github.com/aks-builds/flag-drift-audit",
+  },
+  {
+    name: "context-budget-alloc",
+    description: "Token budget allocator for LLM prompts — named zones and dynamic rebalancing.",
+    npmUrl: "https://www.npmjs.com/package/context-budget-alloc",
+    githubUrl: "https://github.com/aks-builds/context-budget-alloc",
+  },
+  {
+    name: "vc-expiry-watch",
+    description: "Offline CLI reporting Verifiable Credential expiry, validity, and revocation status.",
+    npmUrl: "https://www.npmjs.com/package/vc-expiry-watch",
+    githubUrl: "https://github.com/aks-builds/vc-expiry-watch",
+  },
 ];
 
 export interface NpmPackageWithDownloads extends NpmPackageMeta {
